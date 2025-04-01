@@ -41,8 +41,11 @@ struct ClosetView: View {
 
     var body: some View {
         List {
-            ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color)
+            ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: <#T##Piece#>)
+                .frame(width: 360)
+                .padding(0)
         }
+        .contentMargins(10)
         
     }
 }

@@ -12,37 +12,44 @@ struct ClosetCell: View {
     @Binding var tapLocation: CGPoint
     @Binding var popupPosition: VerticalAlignment
     let color: Color
+    let piece: Piece
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 Image(systemName: "person.fill")
                     .resizable()
-                    .frame(width: 120, height: 120)
+                    .frame(width: 140, height: 140)
+                    .padding(.trailing, 3)
+                
+                
                 
                 VStack(alignment: .leading, spacing: 0) {
                     Text("WWWWWWWWWWWW")
                         .font(.body)
-                        .fontWeight(.bold)
+                        .fontWeight(.heavy)
                         .lineLimit(1)
+                        .frame(width: 210, alignment: .leading)
+                        .padding(.bottom, 4)
                     
                     HStack(alignment: .top, spacing: 0.0) {
                         VStack(alignment: .leading) {
-                            Text("Fit:").font(.callout)
-                            Text("Type:").font(.callout)
-                            Text("Size:").font(.callout)
+                            Text("Fit:").font(.callout).lineLimit(1).padding(.bottom, 0.5)
+                            Text("Type:").font(.callout).lineLimit(1).padding(.bottom, 0.5)
+                            Text("Size:").font(.callout).lineLimit(1)
                         }
-                        .frame(width: 120, alignment: .leading)
-                        Spacer()
+                        .frame(width: 165, alignment: .leading)
                         VStack(alignment: .trailing) {
                             Spacer()
-                            // 🎨 Color Box with Tap Tracking
                             ColorBox(color: color, showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition)
+                                .padding(0)
                         }
+                        .frame(height: 115)
                     }
                     
                 }
-                .padding(.horizontal, 0.0)
+                
             }
+            .padding( .vertical, 2).padding(.horizontal, 5)
         }
     }
 }
@@ -60,7 +67,7 @@ struct ColorBox: View {
         GeometryReader { geometry in
             Rectangle()
                 .fill(color)
-                .frame(width: 60, height: 60)
+                .frame(width: 40, height: 40)
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 .onTapGesture {
@@ -72,7 +79,7 @@ struct ColorBox: View {
                     }
                 }
         }
-        .frame(width: 120, height: 120) // Fixes Layout Issues
+        .frame(width: 40, height: 40)
     }
 }
 
