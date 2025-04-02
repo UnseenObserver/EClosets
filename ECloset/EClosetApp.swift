@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
-struct EClosetsApp: App {
+struct EClosetApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {

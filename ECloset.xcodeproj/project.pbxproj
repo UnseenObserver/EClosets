@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		642A2D192D889EA9002BE1ED /* EClosets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EClosets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		642A2D192D889EA9002BE1ED /* ECloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		642A2D1B2D889EA9002BE1ED /* EClosets */ = {
+		642A2D1B2D889EA9002BE1ED /* ECloset */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EClosets;
+			path = ECloset;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		642A2D102D889EA9002BE1ED = {
 			isa = PBXGroup;
 			children = (
-				642A2D1B2D889EA9002BE1ED /* EClosets */,
+				642A2D1B2D889EA9002BE1ED /* ECloset */,
 				642A2D1A2D889EA9002BE1ED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		642A2D1A2D889EA9002BE1ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				642A2D192D889EA9002BE1ED /* EClosets.app */,
+				642A2D192D889EA9002BE1ED /* ECloset.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		642A2D182D889EA9002BE1ED /* EClosets */ = {
+		642A2D182D889EA9002BE1ED /* ECloset */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 642A2D2C2D889EAB002BE1ED /* Build configuration list for PBXNativeTarget "EClosets" */;
+			buildConfigurationList = 642A2D2C2D889EAB002BE1ED /* Build configuration list for PBXNativeTarget "ECloset" */;
 			buildPhases = (
 				642A2D152D889EA9002BE1ED /* Sources */,
 				642A2D162D889EA9002BE1ED /* Frameworks */,
@@ -61,13 +61,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				642A2D1B2D889EA9002BE1ED /* EClosets */,
+				642A2D1B2D889EA9002BE1ED /* ECloset */,
 			);
-			name = EClosets;
+			name = ECloset;
 			packageProductDependencies = (
 			);
 			productName = EClosets;
-			productReference = 642A2D192D889EA9002BE1ED /* EClosets.app */;
+			productReference = 642A2D192D889EA9002BE1ED /* ECloset.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 642A2D142D889EA9002BE1ED /* Build configuration list for PBXProject "EClosets" */;
+			buildConfigurationList = 642A2D142D889EA9002BE1ED /* Build configuration list for PBXProject "ECloset" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				642A2D182D889EA9002BE1ED /* EClosets */,
+				642A2D182D889EA9002BE1ED /* ECloset */,
 			);
 		};
 /* End PBXProject section */
@@ -303,7 +303,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		642A2D142D889EA9002BE1ED /* Build configuration list for PBXProject "EClosets" */ = {
+		642A2D142D889EA9002BE1ED /* Build configuration list for PBXProject "ECloset" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				642A2D2A2D889EAB002BE1ED /* Debug */,
@@ -312,7 +312,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		642A2D2C2D889EAB002BE1ED /* Build configuration list for PBXNativeTarget "EClosets" */ = {
+		642A2D2C2D889EAB002BE1ED /* Build configuration list for PBXNativeTarget "ECloset" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				642A2D2D2D889EAB002BE1ED /* Debug */,

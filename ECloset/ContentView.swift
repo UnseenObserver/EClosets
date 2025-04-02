@@ -38,10 +38,11 @@ struct ClosetView: View {
     @Binding var popupPosition: VerticalAlignment
     let color: Color
     let screenHeight = UIScreen.main.bounds.height
+    let placePiece: Piece = Piece()
 
     var body: some View {
         List {
-            ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: <#T##Piece#>)
+            ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: placePiece)
                 .frame(width: 360)
                 .padding(0)
         }
