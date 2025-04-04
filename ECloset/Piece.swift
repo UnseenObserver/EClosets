@@ -16,20 +16,24 @@ class Piece {
     var fit: String
     var type: String
     var size: String
-    var image: UIImage
-    var color: Color
+    var image: Data?
+    var colorR: Int
+    var colorG: Int
+    var colorB: Int
     var brand: String
     var owner: String
-    var season: String
+    var season: Int
     var uniqueID: String
     
-    init(name: String, fit: String, type: String, size: String, image: UIImage, color: Color, brand: String, owner: String, season: String, uniqueID: String) {
+    init(name: String, fit: String, type: String, size: String, image: Data? = nil, colorR: Int, colorG: Int, colorB: Int, brand: String, owner: String, season: Int, uniqueID: String) {
         self.name = name
         self.fit = fit
         self.type = type
         self.size = size
         self.image = image
-        self.color = color
+        self.colorR = colorR
+        self.colorG = colorG
+        self.colorB = colorB
         self.brand = brand
         self.owner = owner
         self.season = season
@@ -41,43 +45,47 @@ class Piece {
         self.fit = "Fit"
         self.type = "Type"
         self.size = "Size"
-        self.image = UIImage(systemName: "person.fill")!
-        self.color = Color(red: 1, green: 1, blue: 1,opacity: 1)
+        self.image = UIImage(systemName: "person.fill")!.pngData()
+        self.colorR = 255
+        self.colorG = 255
+        self.colorB = 255
         self.brand = "Brand"
         self.owner = "Owner"
-        self.season = "Season"
+        self.season = 1
         self.uniqueID = "###,###,###,##,WW,WW,WWW,#,WWW,WWWWWWWWWWWWWWWWWW"
     }
     
-    func getName() -> String {
-        
+    func getSwiftColor(red: Double, green: Double, blue: Double) -> Color {
+        var foundColor: Color
+        foundColor = Color(red: red, green: green, blue: blue)
+        return foundColor
     }
-    func getName() -> String {
-        
+    
+    func getFitCode(fitS: String) -> String {
+        var fitC: String = ""
+        return fitC
     }
-    func getName() -> String {
-        
+    
+    func getTypeCode(typeS: String) -> String {
+        var fitC: String = ""
+        return fitC
     }
-    func getName() -> String {
-        
+    
+    func getSizeCode(sizeS: String) -> Int {
+        var sizeC = 0
+        return sizeC
     }
-    func getName() -> String {
-        
+    
+    func getBrandCode(brandS: String) -> String {
+        var fitC: String = ""
+        return fitC
     }
-    func getName() -> String {
-        
+    
+    func getSeasonCode(seasonS: Int) -> Int {
+        var seasonC = 0
+        return seasonC
     }
-    func getName() -> String {
-        
-    }
-    func getName() -> String {
-        
-    }
-    func getName() -> String {
-        
-    }
-    func getName() -> String {
-        
-    }
+    
+    
     
 }

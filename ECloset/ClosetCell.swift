@@ -77,6 +77,7 @@ struct ColorBox: View {
                         popupPosition = tapLocation.y > screenHeight / 2 ? .top : .bottom
                         showPopup.toggle()
                     }
+                    print("HI!")
                 }
         }
         .frame(width: 40, height: 40)

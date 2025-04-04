@@ -17,5 +17,6 @@ struct EClosetApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        .modelContainer(for: Piece.self)
     }
 }
