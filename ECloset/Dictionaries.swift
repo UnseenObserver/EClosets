@@ -1,3 +1,5 @@
+import Foundation
+
 extension Dictionary where Value: Hashable {
     func flip() -> [Value: Key] {
         var flippedDict: [Value: Key] = [:]
@@ -10,8 +12,8 @@ extension Dictionary where Value: Hashable {
 
 class Dictionaries {
     init() { }
-
-    static let clothingBrandsF: [String: String] = [
+    
+    static let clothingBrandsEncode: [String: String] = [
         "Nike": "NKE",
         "Adidas": "ADS",
         "Puma": "PMA",
@@ -113,8 +115,8 @@ class Dictionaries {
         "Stella McCartney": "STM",
         "Helly Hansen": "HLH"
     ]
-
-    static let sizesF: [String: Int] = [
+    
+    static let sizesEncode: [String: Int] = [
         "XXS": 0,
         "XS": 1,
         "S": 2,
@@ -126,8 +128,8 @@ class Dictionaries {
         "4XL": 8,
         "5XL": 9
     ]
-
-    static let typesF: [String: String] = [
+    
+    static let typesEncode: [String: String] = [
         "SHIRTS": "SH",
         "PANTS": "PT",
         "DRESS": "DR",
@@ -138,53 +140,53 @@ class Dictionaries {
         "SOCKS": "SC",
         "BRA": "BR"
     ]
-
-    static let shirtFitsF: [String: String] = [
+    
+    static let shirtFitsEncode: [String: String] = [
         "Slim": "SL",
         "Regular": "RF",
         "Relaxed": "RX",
         "Oversized": "OV",
         "Boxy": "BX"
     ]
-
-    static let pantsFitsF: [String: String] = [
+    
+    static let pantsFitsEncode: [String: String] = [
         "Skinny Fit": "SK",
         "Slim Fit": "SL",
         "Regular Fit": "RG",
         "Relaxed Fit": "RX",
         "Loose Fit": "LS"
     ]
-
-    static let dressFitsF: [String: String] = [
+    
+    static let dressFitsEncode: [String: String] = [
         "Bodycon": "BC",
         "A-Line": "AL",
         "Empire Waist": "EW",
         "Shift": "ST"
     ]
-
-    static let skirtFitsF: [String: String] = [
+    
+    static let skirtFitsEncode: [String: String] = [
         "Pencil": "PL",
         "A-Line": "AL",
         "Pleated": "PT",
         "Maxi": "MX"
     ]
-
-    static let coatFitsF: [String: String] = [
+    
+    static let coatFitsEncode: [String: String] = [
         "Tailored": "TD",
         "Regular": "RG",
         "Relaxed": "RX",
         "Oversized": "OV",
         "Fitted": "FT"
     ]
-
-    static let shortsFitsF: [String: String] = [
+    
+    static let shortsFitsEncode: [String: String] = [
         "Slim": "SL",
         "Regular": "RG",
         "Relaxed": "RX",
         "Baggy Fit": "BG"
     ]
-
-    static let underwearFitsF: [String: String] = [
+    
+    static let underwearFitsEncode: [String: String] = [
         "Briefs": "BF",
         "Bikinis": "BK",
         "Thongs": "TG",
@@ -207,8 +209,8 @@ class Dictionaries {
         "Postpartum": "PP",
         "Shapewear": "SW"
     ]
-
-    static let sockFitsF: [String: String] = [
+    
+    static let sockFitsEncode: [String: String] = [
         "No-Show Socks": "NS",
         "Ankle Socks": "AK",
         "Crew Socks": "CW",
@@ -224,8 +226,8 @@ class Dictionaries {
         "Sports Socks": "SP",
         "Diabetic Socks": "DB"
     ]
-
-    static let braFitsF: [String: String] = [
+    
+    static let braFitsEncode: [String: String] = [
         "T-Shirt Bra": "TS",
         "Push-Up Bra": "PU",
         "Balconette Bra": "BC",
@@ -241,17 +243,139 @@ class Dictionaries {
         "Convertible Bra": "CV",
         "Minimizer Bra": "MN"
     ]
+    
+    static let clothingBrandsDecode = clothingBrandsEncode.flip()
+    static let sizesDecode = sizesEncode.flip()
+    static let typesDecode = typesEncode.flip()
+    static let shirtFitsDecode = shirtFitsEncode.flip()
+    static let pantsFitsDecode = pantsFitsEncode.flip()
+    static let dressFitsDecode = dressFitsEncode.flip()
+    static let skirtFitsDecode = skirtFitsEncode.flip()
+    static let coatFitsDecode = coatFitsEncode.flip()
+    static let shortsFitsDecode = shortsFitsEncode.flip()
+    static let underwearFitsDecode = underwearFitsEncode.flip()
+    static let sockFitsDecode = sockFitsEncode.flip()
+    static let braFitsDecode = braFitsEncode.flip()
+    
+    
+    //Dictionary Stuff
+    func getFitCode(fitS: String, typeC: String) -> String {
+        var fitC: String = ""
+        switch getTypeString(typeC: typeC) {
+        case "SHIRT":
+            fitC = Dictionaries.shirtFitsEncode[fitS]!
+        case "PANTS":
+            fitC = Dictionaries.pantsFitsEncode[fitS]!
+        case "DRESS":
+            fitC = Dictionaries.dressFitsEncode[fitS]!
+        case "SKIRT":
+            fitC = Dictionaries.skirtFitsEncode[fitS]!
+        case "COAT":
+            fitC = Dictionaries.coatFitsEncode[fitS]!
+        case "SHORTS":
+            fitC = Dictionaries.shortsFitsEncode[fitS]!
+        case "UNDERWEAR":
+            fitC = Dictionaries.underwearFitsEncode[fitS]!
+        case "SOCK":
+            fitC = Dictionaries.sockFitsEncode[fitS]!
+        case "BRA":
+            fitC = Dictionaries.braFitsEncode[fitS]!
+        default:
+            fitC = "ER"
+        }
+        return fitC
+    }
+    
+    func getTypeCode(typeS: String) -> String {
+        var typeC: String = ""
+        typeC = Dictionaries.typesEncode[typeS]!
+        return typeC
+    }
+    
+    func getSizeCode(sizeS: String) -> Int {
+        var sizeC = 0
+        sizeC = Dictionaries.sizesEncode[sizeS]!
+        return sizeC
+    }
+    
+    func getBrandCode(brandS: String) -> String {
+        var brandC: String = ""
+        brandC = Dictionaries.clothingBrandsEncode[brandS]!
+        return brandC
+    }
+    
+    func getFitString(fitC: String, typeC: String) -> String {
+        var fitS: String = ""
+        switch getTypeString(typeC: typeC) {
+        case "SHIRT":
+            fitS = Dictionaries.shirtFitsEncode[fitC]!
+        case "PANTS":
+            fitS = Dictionaries.pantsFitsEncode[fitC]!
+        case "DRESS":
+            fitS = Dictionaries.dressFitsEncode[fitC]!
+        case "SKIRT":
+            fitS = Dictionaries.skirtFitsEncode[fitC]!
+        case "COAT":
+            fitS = Dictionaries.coatFitsEncode[fitC]!
+        case "SHORTS":
+            fitS = Dictionaries.shortsFitsEncode[fitC]!
+        case "UNDERWEAR":
+            fitS = Dictionaries.underwearFitsEncode[fitC]!
+        case "SOCK":
+            fitS = Dictionaries.sockFitsEncode[fitC]!
+        case "BRA":
+            fitS = Dictionaries.braFitsEncode[fitC]!
+        default:
+            fitS = "ER"
+        }
+        return fitS
+    }
+    
+    func getTypeString(typeC: String) -> String {
+        var typeS: String = ""
+        typeS = Dictionaries.typesDecode[typeC]!
+        return typeS
+    }
+    
+    func getSizeInt(sizeC: Int) -> String {
+        var sizeS = ""
+        sizeS = Dictionaries.sizesDecode[sizeC]!
+        return sizeS
+    }
+    
+    func getBrandString(brandC: String) -> String {
+        var brandS: String = ""
+        brandS = Dictionaries.clothingBrandsDecode[brandC]!
+        return brandS
+    }
+    
+}
 
-    static let clothingBrandsP = clothingBrandsF.flip()
-    static let sizesP = sizesF.flip()
-    static let typesP = typesF.flip()
-    static let shirtFitsP = shirtFitsF.flip()
-    static let pantsFitsP = pantsFitsF.flip()
-    static let dressFitsP = dressFitsF.flip()
-    static let skirtFitsP = skirtFitsF.flip()
-    static let coatFitsP = coatFitsF.flip()
-    static let shortsFitsP = shortsFitsF.flip()
-    static let underwearFitsP = underwearFitsF.flip()
-    static let sockFitsP = sockFitsF.flip()
-    static let braFitsP = braFitsF.flip()
+
+class DictionaryStorage {
+    private let filename = "ClosetIdFile.json"
+    
+    private var fileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent(filename)
+    }
+    
+    func save(dictionary: [String:[String]]) {
+        do {
+            let data = try JSONEncoder().encode(dictionary)
+            try data.write(to: fileURL, options: .atomic)
+        } catch {
+            print("Failed to save dictionary:", error)
+        }
+    }
+    
+    func load() -> [String:[String]] {
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return try JSONDecoder().decode([String:[String]].self, from: data)
+        } catch {
+            print("Failed to load dictionary:", error)
+            return [:]
+        }
+    }
 }

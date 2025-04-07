@@ -15,6 +15,7 @@ class Piece {
     var name: String
     var fit: String
     var type: String
+    var material: String
     var size: String
     var image: Data?
     var colorR: Int
@@ -25,10 +26,11 @@ class Piece {
     var season: Int
     var uniqueID: String
     
-    init(name: String, fit: String, type: String, size: String, image: Data? = nil, colorR: Int, colorG: Int, colorB: Int, brand: String, owner: String, season: Int, uniqueID: String) {
+    init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Int, colorG: Int, colorB: Int, brand: String, owner: String, season: Int, uniqueID: String) {
         self.name = name
         self.fit = fit
         self.type = type
+        self.material = marterial
         self.size = size
         self.image = image
         self.colorR = colorR
@@ -44,6 +46,7 @@ class Piece {
         self.name = "Piece"
         self.fit = "Fit"
         self.type = "Type"
+        self.material = "Material"
         self.size = "Size"
         self.image = UIImage(systemName: "person.fill")!.pngData()
         self.colorR = 255
@@ -55,35 +58,17 @@ class Piece {
         self.uniqueID = "###,###,###,##,WW,WW,WWW,#,WWW,WWWWWWWWWWWWWWWWWW"
     }
     
+    
+
     func getSwiftColor(red: Double, green: Double, blue: Double) -> Color {
         var foundColor: Color
         foundColor = Color(red: red, green: green, blue: blue)
         return foundColor
     }
     
-    func getFitCode(fitS: String) -> String {
-        var fitC: String = ""
-        return fitC
-    }
-    
-    func getTypeCode(typeS: String) -> String {
-        var fitC: String = ""
-        return fitC
-    }
-    
-    func getSizeCode(sizeS: String) -> Int {
-        var sizeC = 0
-        return sizeC
-    }
-    
-    func getBrandCode(brandS: String) -> String {
-        var fitC: String = ""
-        return fitC
-    }
-    
-    func getSeasonCode(seasonS: Int) -> Int {
-        var seasonC = 0
-        return seasonC
+    func getID(red: Int, green: Int, blue: Int, size: Int, type: String, fit: String, material: String, season: Int, brand: String, owner: String) {
+        
+        
     }
     
     

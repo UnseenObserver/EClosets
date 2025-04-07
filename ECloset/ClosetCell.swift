@@ -5,22 +5,49 @@
 //  Created by HPro2 on 3/21/25.
 
 import SwiftUI
-
+import PhotosUI
 
 struct ClosetCell: View {
     @Binding var showPopup: Bool
     @Binding var tapLocation: CGPoint
     @Binding var popupPosition: VerticalAlignment
+    @State private var image: PhotosPickerItem?
+    @State var imageData: Data?
     let color: Color
     let piece: Piece
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .frame(width: 140, height: 140)
-                    .padding(.trailing, 3)
-                
+                Group {
+                    if let imageData,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                }
+                .frame(width: 140, height: 140, alignment: .center)
+//                PhotosPicker(
+//                    selection: $image,
+//                    matching: .images,
+//                    photoLibrary: .shared()) {
+//                        Group {
+//                            if let imageData,
+//                               let uiImage = UIImage(data: imageData) {
+//                                Image(uiImage: uiImage)
+//                                    .resizable()
+//                                    .scaledToFit()
+//                            } else {
+//                                Image(systemName: "person.fill")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                            }
+//                        }
+//                    }
                 
                 
                 VStack(alignment: .leading, spacing: 0) {
@@ -52,8 +79,9 @@ struct ClosetCell: View {
             .padding( .vertical, 2).padding(.horizontal, 5)
         }
     }
+    
 }
-
+    
 
 // ✅ Color Box That Triggers Pop-Up
 struct ColorBox: View {

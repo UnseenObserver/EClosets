@@ -9,6 +9,7 @@ struct ContentView: View {
     
     var body: some View {
         let closetViewInstance = ClosetView(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color)
+        
         @State var selectedTab = 0
         
         ZStack {
@@ -16,6 +17,7 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 Tab("Closet", systemImage: "duffle.bag.fill", value: 0) {
                     ClosetView(showPopup: $showPopup,tapLocation: $tapLocation,popupPosition: $popupPosition,color: color)
+                    
                 }
                 Tab("Search", systemImage: "magnifyingglass", value: 1) {
                     SearchView()
@@ -47,9 +49,26 @@ struct ContentView: View {
         var body: some View {
             VStack {
                 List {
-                    ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: placePiece)
-                        .frame(width: 360)
-                        .padding(0)
+                        ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: placePiece)
+                            .frame(width: 360)
+                            .padding(0)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button() {
+                                    EditView()
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.accentColor)
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    
+                                } label: {
+                                    Label("Favorite", systemImage: "star")
+                                }
+                                .tint(.indigo)
+                            }
+                    
                 }
                 .contentMargins(10)
             }
@@ -71,6 +90,12 @@ struct ContentView: View {
     struct ProfileView: View {
         var body: some View {
             Text("👤 Profile Page").font(.largeTitle).bold()
+        }
+    }
+    
+    struct EditView: View {
+        var body: some View {
+            Text("Edit Here")
         }
     }
 }
