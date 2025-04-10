@@ -31,23 +31,6 @@ struct ClosetCell: View {
                     }
                 }
                 .frame(width: 140, height: 140, alignment: .center)
-//                PhotosPicker(
-//                    selection: $image,
-//                    matching: .images,
-//                    photoLibrary: .shared()) {
-//                        Group {
-//                            if let imageData,
-//                               let uiImage = UIImage(data: imageData) {
-//                                Image(uiImage: uiImage)
-//                                    .resizable()
-//                                    .scaledToFit()
-//                            } else {
-//                                Image(systemName: "person.fill")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                            }
-//                        }
-//                    }
                 
                 
                 VStack(alignment: .leading, spacing: 0) {

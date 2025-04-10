@@ -1,4 +1,5 @@
 import SwiftUI
+import _PhotosUI_SwiftUI
 
 struct ContentView: View {
     @State private var showPopup = false
@@ -22,8 +23,11 @@ struct ContentView: View {
                 Tab("Search", systemImage: "magnifyingglass", value: 1) {
                     SearchView()
                 }
-                Tab("Profile", systemImage: "person.fill", value: 3) {
+                Tab("Profile", systemImage: "person.fill", value: 2) {
                     ProfileView()
+                }
+                Tab("Edit", systemImage: "pencil", value: 3) {
+                    EditView()
                 }
             }
             
@@ -94,8 +98,27 @@ struct ContentView: View {
     }
     
     struct EditView: View {
+        var piece: Piece
+        @State private var image: PhotosPickerItem?
+        @State var imageData: Data = piece.image!
         var body: some View {
-            Text("Edit Here")
+            PhotosPicker(
+                selection: $image,
+                matching: .images,
+                photoLibrary: .shared()) {
+                    Group {
+                        if let imageData,
+                           let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Image(systemName: "person.fill")
+                                .resizable()
+                                .scaledToFit()
+                        }
+                    }
+                }
         }
     }
 }
