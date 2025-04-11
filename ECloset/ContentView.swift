@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var popupPosition: VerticalAlignment = .top
     @State private var tapLocation: CGPoint = .zero
     let color: Color = .blue
+    let piece: Piece = Piece()
     
     
     var body: some View {
@@ -27,7 +28,7 @@ struct ContentView: View {
                     ProfileView()
                 }
                 Tab("Edit", systemImage: "pencil", value: 3) {
-                    EditView()
+                    EditView(piece: piece)
                 }
             }
             
@@ -48,17 +49,17 @@ struct ContentView: View {
         @Binding var popupPosition: VerticalAlignment
         let color: Color
         let screenHeight = UIScreen.main.bounds.height
-        let placePiece: Piece = Piece()
+        let piece: Piece = Piece()
         
         var body: some View {
             VStack {
                 List {
-                        ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: placePiece)
+                        ClosetCell(showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition, color: color, piece: piece)
                             .frame(width: 360)
                             .padding(0)
                             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                 Button() {
-                                    EditView()
+                                    EditView(piece: piece)
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }
@@ -100,25 +101,40 @@ struct ContentView: View {
     struct EditView: View {
         var piece: Piece
         @State private var image: PhotosPickerItem?
-        @State var imageData: Data = piece.image!
+        @State var imageData: Data?
+        
+        init(piece: Piece) {
+            self.piece = piece
+            self.image = nil
+            self.imageData = piece.image!
+        }
+        
         var body: some View {
-            PhotosPicker(
-                selection: $image,
-                matching: .images,
-                photoLibrary: .shared()) {
-                    Group {
-                        if let imageData,
-                           let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                        } else {
-                            Image(systemName: "person.fill")
-                                .resizable()
-                                .scaledToFit()
-                        }
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    Text(piece.name).font(.title).fontWeight(.heavy).multilineTextAlignment(.leading).lineLimit(1)
+                    HStack {
+                        PhotosPicker(
+                            selection: $image,
+                            matching: .images,
+                            photoLibrary: .shared()) {
+                                Group {
+                                    if let imageData,
+                                       let uiImage = UIImage(data: imageData) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                    } else {
+                                        Image(systemName: "person.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                    }
+                                }
+                            }
+                            .frame(width: 200, height: 200)
                     }
                 }
+            }
         }
     }
 }
