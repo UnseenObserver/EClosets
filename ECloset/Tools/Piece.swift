@@ -18,15 +18,15 @@ class Piece {
     var material: String
     var size: String
     var image: Data?
-    var colorR: Int
-    var colorG: Int
-    var colorB: Int
+    var colorR: Double
+    var colorG: Double
+    var colorB: Double
     var brand: String
     var owner: String
     var season: Int
     var uniqueID: String
     
-    init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Int, colorG: Int, colorB: Int, brand: String, owner: String, season: Int, uniqueID: String) {
+    init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Double, colorG: Double, colorB: Double, brand: String, owner: String, season: Int, uniqueID: String) {
         self.name = name
         self.fit = fit
         self.type = type
@@ -60,9 +60,9 @@ class Piece {
     
     
 
-    func getSwiftColor(red: Double, green: Double, blue: Double) -> Color {
+    func getSwiftColor() -> Color {
         var foundColor: Color
-        foundColor = Color(red: red, green: green, blue: blue)
+        foundColor = Color(red: colorR, green: colorG, blue: colorB)
         return foundColor
     }
     

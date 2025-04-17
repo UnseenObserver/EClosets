@@ -12,21 +12,29 @@ struct InfoCell: View {
     @State var displayedInfo: String
     @State var width: CGFloat
     @State var height: CGFloat
+    @State var cornerRadius: CGFloat
+    @State var spaceAroundX: CGFloat
+    @State var spaceAroundY: CGFloat
     
     var body: some View {
-        ZStack {
-            GeometryReader{ geometry in
+        GeometryReader{ geometry in
+            ZStack {
                 Rectangle()
                     .frame(width: width, height: height)
-                    .presentationCornerRadius(10)
+                    .foregroundStyle(.infoBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius) )
+                
                 Text(displayedInfo)
                     .font(.largeTitle)
-                    .scaledToFit()
-                    .frame(width: width - width/4, height: height - height/4)
                     .zIndex(1)
+                    .foregroundStyle(.primary)
+                    .scaleEffect(x: 1 - ((spaceAroundX * 2) / 100), y: 1 - ((spaceAroundY * 2) / 100))
+                    .frame(width: width, height: height)
                 
             }
         }
+        .frame(width: width, height: height)
     }
+    
     
 }
