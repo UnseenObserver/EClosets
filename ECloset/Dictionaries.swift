@@ -129,6 +129,43 @@ class Dictionaries {
         "5XL": 9
     ]
     
+    static let materialsEncode: [String: String] = [
+        "Cotton":      "COT",
+        "Wool":        "WOO",
+        "Silk":        "SIL",
+        "Linen":       "LIN",
+        "Denim":       "DEN",
+        "Cashmere":    "CAS",
+        "Hemp":        "HEM",
+        "Jute":        "JUT",
+        "Ramie":       "RAM",
+        "Bamboo":      "BAM",
+        "Alpaca":      "ALP",
+        "Angora":      "ANG",
+
+        "Polyester":   "POL",
+        "Nylon":       "NYL",
+        "Acrylic":     "ACR",
+        "Rayon":       "RAY",
+        "Viscose":     "VIS",
+        "Lyocell":     "LYO",
+        "Modal":       "MOD",
+        "Spandex":     "SPA",
+
+        "Leather":     "LEA",
+        "Chiffon":     "CHI",
+        "Organza":     "ORG",
+        "Taffeta":     "TAF",
+        "Suede":       "SUE",
+        "Flannel":     "FLA",
+        "Mesh":        "MES",
+        "Tulle":       "TUL",
+        "Lace":        "LAC",
+        "Canvas":      "CAN",
+        "Gabardine":   "GAB",
+        "Crepe":       "CRE"
+    ]
+    
     static let typesEncode: [String: String] = [
         "SHIRTS": "SH",
         "PANTS": "PT",
@@ -246,6 +283,7 @@ class Dictionaries {
     
     static let clothingBrandsDecode = clothingBrandsEncode.flip()
     static let sizesDecode = sizesEncode.flip()
+    static let materialDecode = materialsEncode.flip()
     static let typesDecode = typesEncode.flip()
     static let shirtFitsDecode = shirtFitsEncode.flip()
     static let pantsFitsDecode = pantsFitsEncode.flip()

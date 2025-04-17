@@ -22,7 +22,6 @@ struct ColorBox: View {
                 .fill(color)
                 .frame(width: 40, height: 40)
                 .cornerRadius(10)
-                .shadow(radius: 5)
                 .onTapGesture {
                     withAnimation {
                         let boxFrame = geometry.frame(in: .global)

@@ -54,7 +54,7 @@ class Piece {
         self.colorB = 255
         self.brand = "Brand"
         self.owner = "Owner"
-        self.season = 1
+        self.season = 0
         self.uniqueID = "###,###,###,##,WW,WW,WWW,#,WWW,WWWWWWWWWWWWWWWWWW"
     }
     
@@ -66,9 +66,25 @@ class Piece {
         return foundColor
     }
     
+    func getSeasonString() -> String {
+        var seasonString: String
+        switch season {
+        case 1:
+            seasonString = "Winter"
+        case 2:
+            seasonString = "Spring"
+        case 3:
+            seasonString = "Summer"
+        case 4:
+            seasonString = "Fall"
+        default:
+            seasonString = "Unknown"
+        }
+        
+        return seasonString
+    }
+    
     func getID(red: Int, green: Int, blue: Int, size: Int, type: String, fit: String, material: String, season: Int, brand: String, owner: String) {
-        
-        
     }
     
     

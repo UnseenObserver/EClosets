@@ -23,6 +23,7 @@ struct InfoCell: View {
                     .frame(width: width, height: height)
                     .foregroundStyle(.infoBackground)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius) )
+                    .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(Color.primary.opacity(0.1), lineWidth: 1))
                 
                 Text(displayedInfo)
                     .font(.largeTitle)

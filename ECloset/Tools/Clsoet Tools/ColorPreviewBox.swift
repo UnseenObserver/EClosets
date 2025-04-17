@@ -18,7 +18,6 @@ struct ColorPreviewBox: View {
         RoundedRectangle(cornerRadius: cornerRadius)
             .fill(color)
             .frame(width: width, height: height)
-            .shadow(radius: cornerRadius)
-            .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(Color.gray.opacity(0.5), lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(Color.primary.opacity(0.1), lineWidth: 1))
     }
 }
