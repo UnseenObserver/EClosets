@@ -54,6 +54,7 @@ struct ClosetCell: View {
                                 .padding(0)
                         }
                         .frame(height: 115)
+                        
                     }
                     
                 }

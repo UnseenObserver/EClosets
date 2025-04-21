@@ -13,8 +13,9 @@ struct InfoCell: View {
     @State var width: CGFloat
     @State var height: CGFloat
     @State var cornerRadius: CGFloat
-    @State var spaceAroundX: CGFloat
-    @State var spaceAroundY: CGFloat
+    @State var scaleFactorX: CGFloat
+    @State var scaleFactorY: CGFloat
+    
     
     var body: some View {
         GeometryReader{ geometry in
@@ -26,15 +27,19 @@ struct InfoCell: View {
                     .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(Color.primary.opacity(0.1), lineWidth: 1))
                 
                 Text(displayedInfo)
-                    .font(.largeTitle)
+                    .font(.title3)
                     .zIndex(1)
                     .foregroundStyle(.primary)
-                    .scaleEffect(x: 1 - ((spaceAroundX * 2) / 100), y: 1 - ((spaceAroundY * 2) / 100))
+                    .fontWeight(.semibold)
+                    .scaleEffect(x: scaleFactorX, y: scaleFactorY)
                     .frame(width: width, height: height)
+                    .contentMargins(0)
+                    .fixedSize(horizontal: false, vertical: false)
                 
             }
         }
         .frame(width: width, height: height)
+    
     }
     
     

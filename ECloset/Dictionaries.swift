@@ -116,17 +116,17 @@ class Dictionaries {
         "Helly Hansen": "HLH"
     ]
     
-    static let sizesEncode: [String: Int] = [
-        "XXS": 0,
-        "XS": 1,
-        "S": 2,
-        "M": 3,
-        "L": 4,
-        "XL": 5,
-        "XXL": 6,
-        "3XL": 7,
-        "4XL": 8,
-        "5XL": 9
+    static let sizesEncode: [String: String] = [
+        "XXS": "0",
+        "XS": "1",
+        "S": "2",
+        "M": "3",
+        "L": "4",
+        "XL": "5",
+        "XXL": "6",
+        "3XL": "7",
+        "4XL": "8",
+        "5XL": "9"
     ]
     
     static let materialsEncode: [String: String] = [
@@ -248,20 +248,20 @@ class Dictionaries {
     ]
     
     static let sockFitsEncode: [String: String] = [
-        "No-Show Socks": "NS",
-        "Ankle Socks": "AK",
-        "Crew Socks": "CW",
-        "Knee-High Socks": "KH",
-        "Over-the-Knee Socks": "OK",
-        "Thigh-High Socks": "TH",
-        "Toe Socks": "TO",
-        "Split-Toe Socks (Tabi)": "ST",
-        "Liner Socks": "LR",
-        "Dress Socks": "DS",
-        "Compression Socks": "CP",
-        "Thermal Socks": "TH",
-        "Sports Socks": "SP",
-        "Diabetic Socks": "DB"
+        "No-Show": "NS",
+        "Ankle": "AK",
+        "Crew": "CW",
+        "Knee-High": "KH",
+        "Over-the-Knee": "OK",
+        "Thigh-High": "TH",
+        "Toe": "TO",
+        "Split-Toe": "ST",
+        "Liner": "LR",
+        "Dress": "DS",
+        "Compression": "CP",
+        "Thermal": "TH",
+        "Sports": "SP",
+        "Diabetic": "DB"
     ]
     
     static let braFitsEncode: [String: String] = [
@@ -330,8 +330,8 @@ class Dictionaries {
         return typeC
     }
     
-    func getSizeCode(sizeS: String) -> Int {
-        var sizeC = 0
+    func getSizeCode(sizeS: String) -> String {
+        var sizeC = ""
         sizeC = Dictionaries.sizesEncode[sizeS]!
         return sizeC
     }
@@ -375,7 +375,7 @@ class Dictionaries {
         return typeS
     }
     
-    func getSizeInt(sizeC: Int) -> String {
+    func getSizeInt(sizeC: String) -> String {
         var sizeS = ""
         sizeS = Dictionaries.sizesDecode[sizeC]!
         return sizeS

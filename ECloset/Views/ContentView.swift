@@ -29,7 +29,6 @@ struct ContentView: View {
                     EditView(piece: piece)
                 }
             }
-            
             // 🎨 Popup Renders ABOVE Everything Else
             if showPopup {
                 ColorInfoPopup(color: color, position: popupPosition)
