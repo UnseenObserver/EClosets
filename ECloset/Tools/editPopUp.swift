@@ -12,21 +12,12 @@ struct editPopUp: View {
     let piece: Piece
     @State var changingTitle: String
     @State var dictionary: [String:String]
+    @Environment(\.dismiss) var dismiss
+
     
     var body: some View {
         VStack {
-            HStack {
-                
-                Text(changingTitle)
-                    .font(.title3)
-                Spacer()
-                Button("Done") {
-                    
-                }
-                
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
+            Group {
                 List(dictionary.keys.sorted(), id: \.self) { key in
                     Text(key)
                         .onTapGesture {
@@ -67,9 +58,10 @@ struct editPopUp: View {
                             default:
                                 Text("Error")
                             }
+                            dismiss()
                         }
                 }
-            
+            }
         }
         .background(RoundedRectangle(cornerRadius: 15).fill(Color.white.opacity(0.90)).shadow(radius: 5))
     }

@@ -29,7 +29,7 @@ struct ContentView: View {
                     EditView(piece: piece)
                 }
                 Tab("EditPop", systemImage: "pencil") {
-                    editPopUp(changingTitle: "Changing", dictionary: Dictionaries.typesEncode)
+                    editPopUp(piece: piece, changingTitle: "Changing", dictionary: Dictionaries.clothingBrandsEncode)
                 }
             }
             // 🎨 Popup Renders ABOVE Everything Else

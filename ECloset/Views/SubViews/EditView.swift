@@ -76,9 +76,9 @@ struct EditView: View {
                                     Spacer(minLength: 0)
                                     InfoCell(displayedInfo: "Underwear ", width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
-                                            isPresented = true
                                             changingTitle = "Type Of Cloths"
                                             changingDictionary = Dictionaries.typesEncode
+                                            isPresented = true
                                         }
                                     InfoCell(displayedInfo: "Over-the-Knee", width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                     Spacer(minLength: 0)
