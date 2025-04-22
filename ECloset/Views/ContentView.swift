@@ -28,6 +28,9 @@ struct ContentView: View {
                 Tab("Edit", systemImage: "pencil") {
                     EditView(piece: piece)
                 }
+                Tab("EditPop", systemImage: "pencil") {
+                    editPopUp(changingTitle: "Changing", dictionary: Dictionaries.typesEncode)
+                }
             }
             // 🎨 Popup Renders ABOVE Everything Else
             if showPopup {

@@ -129,6 +129,13 @@ class Dictionaries {
         "5XL": "9"
     ]
     
+    static let seasonEncode: [String:String] = [
+        "Winter": "0",
+        "Spring": "1",
+        "Summer": "2",
+        "Fall": "3"
+    ]
+    
     static let materialsEncode: [String: String] = [
         "Cotton":      "COT",
         "Wool":        "WOO",
@@ -285,6 +292,7 @@ class Dictionaries {
     static let sizesDecode = sizesEncode.flip()
     static let materialDecode = materialsEncode.flip()
     static let typesDecode = typesEncode.flip()
+    static let seasonDecode = seasonEncode.flip()
     static let shirtFitsDecode = shirtFitsEncode.flip()
     static let pantsFitsDecode = pantsFitsEncode.flip()
     static let dressFitsDecode = dressFitsEncode.flip()
