@@ -10,8 +10,10 @@ import SwiftData
 import UIKit
 import SwiftUI
 
+
+
 @Model
-class Piece {
+class Piece: ObservableObject {
     var name: String
     var fit: String
     var type: String
@@ -23,10 +25,10 @@ class Piece {
     var colorB: Double
     var brand: String
     var owner: String
-    var season: Int
+    var season: String
     var uniqueID: String
     
-    init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Double, colorG: Double, colorB: Double, brand: String, owner: String, season: Int, uniqueID: String) {
+    init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Double, colorG: Double, colorB: Double, brand: String, owner: String, season: String, uniqueID: String) {
         self.name = name
         self.fit = fit
         self.type = type
@@ -54,7 +56,7 @@ class Piece {
         self.colorB = 255
         self.brand = "Brand"
         self.owner = "Owner"
-        self.season = 0
+        self.season = "Season"
         self.uniqueID = "###,###,###,##,WW,WW,WWW,#,WWW,WWWWWWWWWWWWWWWWWW"
     }
     
@@ -66,16 +68,24 @@ class Piece {
         return foundColor
     }
     
+    func getCGColor() -> CGColor {
+        let red   = CGFloat(colorR) / 255.0
+        let green = CGFloat(colorG) / 255.0
+        let blue  = CGFloat(colorB) / 255.0
+        
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+    
     func getSeasonString() -> String {
         var seasonString: String
         switch season {
-        case 1:
+        case "1":
             seasonString = "Winter"
-        case 2:
+        case "2":
             seasonString = "Spring"
-        case 3:
+        case "3":
             seasonString = "Summer"
-        case 4:
+        case "4":
             seasonString = "Fall"
         default:
             seasonString = "Unknown"
@@ -86,7 +96,6 @@ class Piece {
     
     func getID(red: Int, green: Int, blue: Int, size: Int, type: String, fit: String, material: String, season: Int, brand: String, owner: String) {
     }
-    
     
     
 }

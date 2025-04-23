@@ -2,20 +2,24 @@ import SwiftUI
 import PhotosUI
 
 struct EditView: View {
-    let piece: Piece
+    @ObservedObject var piece: Piece
     
     @State private var pickerItem: PhotosPickerItem?
     @State private var displayedImage: Image?
     @State private var scaleFactorX: CGFloat = 1
     @State private var scaleFactorY: CGFloat = 1
     @State private var isPresented: Bool = false
-    @State private var changingTitle: String = ""
-    @State private var changingDictionary: [String:String] = [:]
+    @State private var changingTitle: String = "Type Of Cloths"
+    @State private var changingDictionary: [String:String] = Dictionaries.typesEncode
+    @State private var popupData: EditPopupData?
+    @State private var selectedColor: Color
+    @State private var alertShowing: Bool = false
     
     init(piece: Piece, pickerItem: PhotosPickerItem? = nil, displayedImage: Image? = nil) {
         self.piece = piece
         self.pickerItem = pickerItem
         self.displayedImage = displayedImage
+        _selectedColor = State(initialValue: piece.getSwiftColor())
     }
 
     var body: some View {
@@ -74,26 +78,49 @@ struct EditView: View {
                             VStack {
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: "Underwear ", width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(displayedInfo: piece.type, width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
-                                            changingTitle = "Type Of Cloths"
-                                            changingDictionary = Dictionaries.typesEncode
-                                            isPresented = true
+                                            tapHandler(changingTitle: "Types", changingDictionary: Dictionaries.typesEncode)
                                         }
-                                    InfoCell(displayedInfo: "Over-the-Knee", width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(displayedInfo: piece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            if piece.type != "Type" {
+                                                tapHandler(changingTitle: "Fit", changingDictionary: Dictionaries().getFitDictionary(piece: piece, flipped: false))
+                                            } else {
+                                                alertShowing = true
+                                            }
+                                                      }
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: "Polyester", width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                    InfoCell(displayedInfo: "Unkown", width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                    InfoCell(displayedInfo: "XXXS", width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(displayedInfo: piece.material, width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            tapHandler(changingTitle: "Materials", changingDictionary: Dictionaries.materialEncode)
+                                        }
+                                    InfoCell(displayedInfo: piece.season, width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            tapHandler(changingTitle: "Seasons", changingDictionary: Dictionaries.seasonEncode)
+                                        }
+                                    InfoCell(displayedInfo: piece.size, width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            tapHandler(changingTitle: "Sizes", changingDictionary: Dictionaries.sizesEncode)
+                                        }
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: "Anthropologie", width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                    ColorPreviewBox(color: piece.getSwiftColor(), width: 168, height: 50, cornerRadius: 15)
+                                    InfoCell(displayedInfo: piece.brand, width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
+                                        }
+                                    ColorPreviewBox(color: selectedColor, width: 168, height: 50, cornerRadius: 15)
+                                    .overlay(
+                                        ColorPicker("", selection: $selectedColor, supportsOpacity: false)
+                                            .labelsHidden()
+                                            .opacity(0.015)
+                                    )
+                                    .frame(width: 168, height: 50)
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
@@ -112,15 +139,27 @@ struct EditView: View {
                         }
                     }
                 }
-                
             }
         }
-        .sheet(isPresented: $isPresented) {
-            editPopUp(piece: piece, changingTitle: changingTitle, dictionary: changingDictionary)
+        .sheet(item: $popupData) { data in
+          EditPopUp(piece: piece,
+                    changingTitle: data.title,
+                    dictionary: data.dictionary)
+            .presentationDetents([.fraction(0.473)])         // half-height
+            .presentationDragIndicator(.visible)           // show the grab handle
         }
+        .alert("Type Must Have Value", isPresented: $alertShowing) {
+            
+        }
+        
+
     }
     
-        
+    func tapHandler(changingTitle: String, changingDictionary: [String:String]) {
+        self.changingTitle = changingTitle
+        self.changingDictionary = changingDictionary
+        popupData = EditPopupData(title: changingTitle, dictionary: changingDictionary)
+    }
     
 //    var owner: String
 //    var uniqueID: String

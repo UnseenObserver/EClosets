@@ -9,12 +9,12 @@ import SwiftUICore
 import SwiftUI
 
 struct InfoCell: View {
-    @State var displayedInfo: String
-    @State var width: CGFloat
-    @State var height: CGFloat
-    @State var cornerRadius: CGFloat
-    @State var scaleFactorX: CGFloat
-    @State var scaleFactorY: CGFloat
+    var displayedInfo: String
+    var width: CGFloat
+    var height: CGFloat
+    var cornerRadius: CGFloat
+    var scaleFactorX: CGFloat
+    var scaleFactorY: CGFloat
     
     
     var body: some View {

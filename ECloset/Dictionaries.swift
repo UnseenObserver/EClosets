@@ -136,7 +136,7 @@ class Dictionaries {
         "Fall": "3"
     ]
     
-    static let materialsEncode: [String: String] = [
+    static let materialEncode: [String: String] = [
         "Cotton":      "COT",
         "Wool":        "WOO",
         "Silk":        "SIL",
@@ -241,17 +241,18 @@ class Dictionaries {
         "Seamless": "SS",
         "Control Briefs": "CB",
         "Cheeky": "CK",
-        "Tanga": "TG",
+        "Tanga": "TA",
         "French Cut": "FC",
         "C-String": "CS",
         "Boxers": "BX",
         "Boxer Briefs": "BB",
         "Jockstraps": "JS",
         "Long Johns": "LJ",
-        "Maternity": "My",
+        "Maternity": "MY",
         "Thermal": "TH",
         "Postpartum": "PP",
-        "Shapewear": "SW"
+        "Shapewear": "SW",
+        "Tucking": "TK"
     ]
     
     static let sockFitsEncode: [String: String] = [
@@ -272,25 +273,26 @@ class Dictionaries {
     ]
     
     static let braFitsEncode: [String: String] = [
-        "T-Shirt Bra": "TS",
-        "Push-Up Bra": "PU",
-        "Balconette Bra": "BC",
-        "Plunge Bra": "PG",
-        "Full-Coverage Bra": "FC",
-        "Demi-Cup Bra": "DC",
-        "Wireless Bra": "WL",
-        "Strapless Bra": "SL",
-        "Sports Bra": "SP",
+        "T-Shirt": "TS",
+        "Push-Up": "PU",
+        "Balconette": "BC",
+        "Plunge": "PG",
+        "Full-Coverage": "FC",
+        "Demi-Cup": "DC",
+        "Wireless": "WL",
+        "Strapless": "SL",
+        "Sports": "SP",
         "Bralette": "BT",
-        "Mastectomy Bra": "MS",
-        "Nursing Bra": "NR",
-        "Convertible Bra": "CV",
-        "Minimizer Bra": "MN"
+        "Mastectomy": "MS",
+        "Nursing": "NR",
+        "Convertible": "CV",
+        "Minimizer": "MN",
+        "Binder": "BR"
     ]
     
     static let clothingBrandsDecode = clothingBrandsEncode.flip()
     static let sizesDecode = sizesEncode.flip()
-    static let materialDecode = materialsEncode.flip()
+    static let materialDecode = materialEncode.flip()
     static let typesDecode = typesEncode.flip()
     static let seasonDecode = seasonEncode.flip()
     static let shirtFitsDecode = shirtFitsEncode.flip()
@@ -332,49 +334,37 @@ class Dictionaries {
         return fitC
     }
     
-    func getTypeCode(typeS: String) -> String {
-        var typeC: String = ""
-        typeC = Dictionaries.typesEncode[typeS]!
-        return typeC
-    }
-    
-    func getSizeCode(sizeS: String) -> String {
-        var sizeC = ""
-        sizeC = Dictionaries.sizesEncode[sizeS]!
-        return sizeC
-    }
-    
-    func getBrandCode(brandS: String) -> String {
-        var brandC: String = ""
-        brandC = Dictionaries.clothingBrandsEncode[brandS]!
-        return brandC
-    }
-    
-    func getFitString(fitC: String, typeC: String) -> String {
-        var fitS: String = ""
-        switch getTypeString(typeC: typeC) {
+    func getFitDictionary(piece: Piece, flipped: Bool) -> [String:String] {
+        var placeHolderDictionary: [String:String] = [:]
+        
+        switch piece.type {
         case "SHIRT":
-            fitS = Dictionaries.shirtFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.shirtFitsEncode
         case "PANTS":
-            fitS = Dictionaries.pantsFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.pantsFitsEncode
         case "DRESS":
-            fitS = Dictionaries.dressFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.dressFitsEncode
         case "SKIRT":
-            fitS = Dictionaries.skirtFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.skirtFitsEncode
         case "COAT":
-            fitS = Dictionaries.coatFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.coatFitsEncode
         case "SHORTS":
-            fitS = Dictionaries.shortsFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.shortsFitsEncode
         case "UNDERWEAR":
-            fitS = Dictionaries.underwearFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.underwearFitsEncode
         case "SOCK":
-            fitS = Dictionaries.sockFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.sockFitsEncode
         case "BRA":
-            fitS = Dictionaries.braFitsEncode[fitC]!
+            placeHolderDictionary = Dictionaries.braFitsEncode
         default:
-            fitS = "ER"
+            break
         }
-        return fitS
+        
+        if flipped == true {
+            return placeHolderDictionary.flip()
+        } else {
+            return placeHolderDictionary
+        }
     }
     
     func getTypeString(typeC: String) -> String {

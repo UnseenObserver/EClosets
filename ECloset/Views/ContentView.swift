@@ -4,10 +4,11 @@ import _PhotosUI_SwiftUI
 import SwiftUICore
 
 struct ContentView: View {
+    @Binding var selectedTab: Int
+    
     @State private var showPopup = false
     @State private var popupPosition: VerticalAlignment = .top
     @State private var tapLocation: CGPoint = .zero
-    @State var selectedTab = 0
     let color: Color = .blue
     let piece: Piece = Piece()
     
@@ -15,21 +16,21 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // 🏠 Main Tab View
-            TabView {
-                Tab("Closet", systemImage: "duffle.bag.fill") {
+            TabView(selection: $selectedTab) {
+                Tab("Closet", systemImage: "duffle.bag.fill", value: 0) {
                     ClosetView(showPopup: $showPopup,tapLocation: $tapLocation,popupPosition: $popupPosition,color: color)
                 }
-                Tab("Search", systemImage: "magnifyingglass") {
+                Tab("Search", systemImage: "magnifyingglass", value: 1) {
                     SearchView()
                 }
-                Tab("Profile", systemImage: "person.fill") {
+                Tab("Profile", systemImage: "person.fill", value: 2) {
                     ProfileView()
                 }
-                Tab("Edit", systemImage: "pencil") {
+                Tab("Edit", systemImage: "pencil", value: 3) {
                     EditView(piece: piece)
                 }
-                Tab("EditPop", systemImage: "pencil") {
-                    editPopUp(piece: piece, changingTitle: "Changing", dictionary: Dictionaries.clothingBrandsEncode)
+                Tab("ColorPop", systemImage: "pencil", value: 4) {
+                    colorPickerPopUp(selectedColor: piece.getCGColor())
                 }
             }
             // 🎨 Popup Renders ABOVE Everything Else
@@ -44,5 +45,21 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    StatefulPreviewWrapper(0) { selectedTab in
+        ContentView(selectedTab: selectedTab)
+    }
+}
+
+struct StatefulPreviewWrapper<Value, Content: View>: View {
+    @State private var value: Value
+    private var content: (Binding<Value>) -> Content
+
+    init(_ initialValue: Value, content: @escaping (Binding<Value>) -> Content) {
+        self._value = State(initialValue: initialValue)
+        self.content = content
+    }
+
+    var body: some View {
+        content($value)
+    }
 }
