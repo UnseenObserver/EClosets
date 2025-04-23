@@ -14,6 +14,7 @@ struct EditView: View {
     @State private var popupData: EditPopupData?
     @State private var selectedColor: Color
     @State private var alertShowing: Bool = false
+    @State var colorPickerShowing: Bool = false
     
     init(piece: Piece, pickerItem: PhotosPickerItem? = nil, displayedImage: Image? = nil) {
         self.piece = piece
@@ -115,12 +116,9 @@ struct EditView: View {
                                             tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
                                         }
                                     ColorPreviewBox(color: selectedColor, width: 168, height: 50, cornerRadius: 15)
-                                    .overlay(
-                                        ColorPicker("", selection: $selectedColor, supportsOpacity: false)
-                                            .labelsHidden()
-                                            .opacity(0.015)
-                                    )
-                                    .frame(width: 168, height: 50)
+                                        .onTapGesture {
+                                            colorPickerShowing = true
+                                        }
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
@@ -145,9 +143,19 @@ struct EditView: View {
           EditPopUp(piece: piece,
                     changingTitle: data.title,
                     dictionary: data.dictionary)
-            .presentationDetents([.fraction(0.473)])         // half-height
+          .presentationDetents([.fraction(0.473),.large])         // half-height
             .presentationDragIndicator(.visible)           // show the grab handle
         }
+        .sheet(isPresented: $colorPickerShowing, content: {
+            ColorPickerPopUp(title: "Color of Piece", selectedColor: selectedColor, didSelectColor: { color in
+                self.selectedColor = color
+                self.colorPickerShowing = false
+            })
+                .padding(.top, 8)
+                .background(.background)
+                .interactiveDismissDisabled(true)
+                .presentationDetents([.height(640)])
+        })
         .alert("Type Must Have Value", isPresented: $alertShowing) {
             
         }

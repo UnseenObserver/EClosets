@@ -78,7 +78,7 @@ struct AddView: View {
                             .fontWeight(.heavy)
                             .frame(maxWidth: .infinity)
                             .onTapGesture {
-                                
+                                nameAlertShowing = true
                             }
                         ScrollView() {
                             VStack {
@@ -157,7 +157,17 @@ struct AddView: View {
         .alert("Type Must Have Value", isPresented: $alertShowing) {
             
         }
-        .textFieldAlert(isPresented: $nameAlertShowing, title: "Enter Name", action: "Done")
+        .textFieldAlert(
+            isPresented: $nameAlertShowing,
+                    title: "Enter something",
+                    message: "This uses a UITextField!",
+                    placeholder: "Type here...",
+                    action: { input in
+                        if let input = input {
+                            piece.name = input
+                        }
+                    }
+                )
         
         
 

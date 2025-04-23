@@ -63,11 +63,13 @@ struct ClosetView: View {
             }
             .contentMargins(10)
         }
-        .fullScreenCover(isPresented: $isPresentedEditView) {
+        .sheet(isPresented: $isPresentedEditView) {
             EditView(piece: piece)
+                .presentationDetents([.large])
         }
-        .fullScreenCover(isPresented: $isPresentedAddView) {
+        .sheet(isPresented: $isPresentedAddView) {
             AddView()
+                .presentationDetents([.fraction(1)]) // iOS 16+ for variable height
         }
     }
     

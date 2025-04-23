@@ -338,13 +338,13 @@ class Dictionaries {
         var placeHolderDictionary: [String:String] = [:]
         
         switch piece.type {
-        case "SHIRT":
+        case "SHIRTS":
             placeHolderDictionary = Dictionaries.shirtFitsEncode
         case "PANTS":
             placeHolderDictionary = Dictionaries.pantsFitsEncode
         case "DRESS":
             placeHolderDictionary = Dictionaries.dressFitsEncode
-        case "SKIRT":
+        case "SKIRTS":
             placeHolderDictionary = Dictionaries.skirtFitsEncode
         case "COAT":
             placeHolderDictionary = Dictionaries.coatFitsEncode
@@ -352,7 +352,7 @@ class Dictionaries {
             placeHolderDictionary = Dictionaries.shortsFitsEncode
         case "UNDERWEAR":
             placeHolderDictionary = Dictionaries.underwearFitsEncode
-        case "SOCK":
+        case "SOCKS":
             placeHolderDictionary = Dictionaries.sockFitsEncode
         case "BRA":
             placeHolderDictionary = Dictionaries.braFitsEncode

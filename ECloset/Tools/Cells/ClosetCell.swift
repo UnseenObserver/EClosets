@@ -50,7 +50,7 @@ struct ClosetCell: View {
                         .frame(width: 165, alignment: .leading)
                         VStack(alignment: .trailing) {
                             Spacer()
-                            ColorBox(color: color, showPopup: $showPopup, tapLocation: $tapLocation, popupPosition: $popupPosition)
+                            ColorBox(color: color)
                                 .padding(0)
                         }
                         .frame(height: 115)
