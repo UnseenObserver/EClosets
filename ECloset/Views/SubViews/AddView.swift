@@ -1,8 +1,15 @@
+//
+//  AddView.swift
+//  ECloset
+//
+//  Created by Student on 4/23/25.
+//
+
 import SwiftUI
 import PhotosUI
 
-struct EditView: View {
-    @ObservedObject var piece: Piece
+struct AddView: View {
+    @ObservedObject var piece: Piece = Piece()
     
     @State private var pickerItem: PhotosPickerItem?
     @State private var displayedImage: Image?
@@ -12,15 +19,11 @@ struct EditView: View {
     @State private var changingTitle: String = "Type Of Cloths"
     @State private var changingDictionary: [String:String] = Dictionaries.typesEncode
     @State private var popupData: EditPopupData?
-    @State private var selectedColor: Color
+    @State private var selectedColor: Color = Color.white
     @State private var alertShowing: Bool = false
+    @State private var nameAlertShowing: Bool = false
     
-    init(piece: Piece, pickerItem: PhotosPickerItem? = nil, displayedImage: Image? = nil) {
-        self.piece = piece
-        self.pickerItem = pickerItem
-        self.displayedImage = displayedImage
-        _selectedColor = State(initialValue: piece.getSwiftColor())
-    }
+    
 
     var body: some View {
         VStack {
@@ -74,6 +77,9 @@ struct EditView: View {
                             .font(.title)
                             .fontWeight(.heavy)
                             .frame(maxWidth: .infinity)
+                            .onTapGesture {
+                                
+                            }
                         ScrollView() {
                             VStack {
                                 HStack {
@@ -84,7 +90,7 @@ struct EditView: View {
                                         }
                                     InfoCell(displayedInfo: piece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
-                                            if piece.type != "" {
+                                            if piece.type != "Type" {
                                                 tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: piece, flipped: false))
                                             } else {
                                                 alertShowing = true
@@ -151,6 +157,8 @@ struct EditView: View {
         .alert("Type Must Have Value", isPresented: $alertShowing) {
             
         }
+        .textFieldAlert(isPresented: $nameAlertShowing, title: "Enter Name", action: "Done")
+        
         
 
     }
@@ -163,6 +171,26 @@ struct EditView: View {
     
 //    var owner: String
 //    var uniqueID: String
+}
+
+extension View {
+    func textFieldAlert(
+        isPresented: Binding<Bool>,
+        title: String,
+        message: String? = nil,
+        placeholder: String = "",
+        action: @escaping (String?) -> Void
+    ) -> some View {
+        background(
+            TextFieldAlertModifier(
+                isPresented: isPresented,
+                title: title,
+                message: message,
+                placeholder: placeholder,
+                action: action
+            )
+        )
+    }
 }
 
 

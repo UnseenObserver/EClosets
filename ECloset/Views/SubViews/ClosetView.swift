@@ -10,7 +10,8 @@ import UIKit
 import SwiftUI
 
 struct ClosetView: View {
-    @State private var isPresented: Bool = false
+    @State private var isPresentedEditView: Bool = false
+    @State private var isPresentedAddView: Bool = false
     @Binding var showPopup: Bool
     @Binding var tapLocation: CGPoint
     @Binding var popupPosition: VerticalAlignment
@@ -31,7 +32,7 @@ struct ClosetView: View {
                 .disabled(true)
                 Spacer()
                 Button() {
-                    
+                    isPresentedAddView = true
                 } label: {
                     Label("Add",systemImage: "plus" )
                 }
@@ -44,7 +45,7 @@ struct ClosetView: View {
                     .padding(0)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button() {
-                            isPresented = true
+                            isPresentedEditView = true
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
@@ -62,8 +63,11 @@ struct ClosetView: View {
             }
             .contentMargins(10)
         }
-        .fullScreenCover(isPresented: $isPresented) {
+        .fullScreenCover(isPresented: $isPresentedEditView) {
             EditView(piece: piece)
+        }
+        .fullScreenCover(isPresented: $isPresentedAddView) {
+            AddView()
         }
     }
     

@@ -29,8 +29,8 @@ struct ContentView: View {
                 Tab("Edit", systemImage: "pencil", value: 3) {
                     EditView(piece: piece)
                 }
-                Tab("ColorPop", systemImage: "pencil", value: 4) {
-                    colorPickerPopUp(selectedColor: piece.getCGColor())
+                Tab("AddView", systemImage: "pencil", value: 4) {
+                    AddView()
                 }
             }
             // 🎨 Popup Renders ABOVE Everything Else
