@@ -22,6 +22,7 @@ struct AddView: View {
     @State private var selectedColor: Color = Color.white
     @State private var alertShowing: Bool = false
     @State private var nameAlertShowing: Bool = false
+    @State private var ownerAlertShowing: Bool = false
     
     
 
@@ -132,6 +133,9 @@ struct AddView: View {
                                 HStack {
                                     Spacer(minLength: 0)
                                     InfoCell(displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            ownerAlertShowing = true
+                                        }
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
@@ -159,12 +163,23 @@ struct AddView: View {
         }
         .textFieldAlert(
             isPresented: $nameAlertShowing,
-                    title: "Enter something",
-                    message: "This uses a UITextField!",
-                    placeholder: "Type here...",
+                    title: "Name",
+                    message: "The Name of the Piece",
+                    placeholder: "Name",
                     action: { input in
                         if let input = input {
                             piece.name = input
+                        }
+                    }
+                )
+        .textFieldAlert(
+            isPresented: $ownerAlertShowing,
+                    title: "Owner",
+                    message: "The Owner of this Piece",
+                    placeholder: "Owner",
+                    action: { input in
+                        if let input = input {
+                            piece.owner = input
                         }
                     }
                 )

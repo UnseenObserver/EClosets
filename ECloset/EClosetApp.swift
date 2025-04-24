@@ -10,13 +10,16 @@ import SwiftData
 
 @main
 struct EClosetApp: App {
-    let persistenceController = PersistenceController.shared
+    // Remove the CoreData persistence controller since you're using SwiftData
+    // let persistenceController = PersistenceController.shared
+    
     @State private var selectedTab: Int = 0
 
     var body: some Scene {
         WindowGroup {
             ContentView(selectedTab: $selectedTab)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                // Remove the CoreData environment
+                // .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .modelContainer(for: Piece.self)
     }

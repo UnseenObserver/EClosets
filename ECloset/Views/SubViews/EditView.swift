@@ -15,6 +15,8 @@ struct EditView: View {
     @State private var selectedColor: Color
     @State private var alertShowing: Bool = false
     @State var colorPickerShowing: Bool = false
+    @State private var nameAlertShowing: Bool = false
+    @State private var ownerAlertShowing: Bool = false
     
     init(piece: Piece, pickerItem: PhotosPickerItem? = nil, displayedImage: Image? = nil) {
         self.piece = piece
@@ -75,6 +77,9 @@ struct EditView: View {
                             .font(.title)
                             .fontWeight(.heavy)
                             .frame(maxWidth: .infinity)
+                            .onTapGesture {
+                                nameAlertShowing = true
+                            }
                         ScrollView() {
                             VStack {
                                 HStack {
@@ -124,6 +129,9 @@ struct EditView: View {
                                 HStack {
                                     Spacer(minLength: 0)
                                     InfoCell(displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                        .onTapGesture {
+                                            ownerAlertShowing = true
+                                        }
                                     Spacer(minLength: 0)
                                 }
                                 HStack {
@@ -159,6 +167,28 @@ struct EditView: View {
         .alert("Type Must Have Value", isPresented: $alertShowing) {
             
         }
+        .textFieldAlert(
+            isPresented: $nameAlertShowing,
+                    title: "Name",
+                    message: "The Name of the Piece",
+                    placeholder: "Name",
+                    action: { input in
+                        if let input = input {
+                            piece.name = input
+                        }
+                    }
+                )
+        .textFieldAlert(
+            isPresented: $ownerAlertShowing,
+                    title: "Owner",
+                    message: "The Owner of this Piece",
+                    placeholder: "Owner",
+                    action: { input in
+                        if let input = input {
+                            piece.owner = input
+                        }
+                    }
+                )
         
 
     }

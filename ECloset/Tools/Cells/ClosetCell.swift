@@ -8,9 +8,6 @@ import SwiftUI
 import PhotosUI
 
 struct ClosetCell: View {
-    @Binding var showPopup: Bool
-    @Binding var tapLocation: CGPoint
-    @Binding var popupPosition: VerticalAlignment
     @State private var image: PhotosPickerItem?
     @State var imageData: Data?
     let color: Color
@@ -34,7 +31,7 @@ struct ClosetCell: View {
                 
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("WWWWWWWWWWWW")
+                    Text(piece.name)
                         .font(.body)
                         .fontWeight(.heavy)
                         .lineLimit(1)
@@ -43,9 +40,9 @@ struct ClosetCell: View {
                     
                     HStack(alignment: .top, spacing: 0.0) {
                         VStack(alignment: .leading) {
-                            Text("Fit:").font(.callout).lineLimit(1).padding(.bottom, 0.5)
-                            Text("Type:").font(.callout).lineLimit(1).padding(.bottom, 0.5)
-                            Text("Size:").font(.callout).lineLimit(1)
+                            Text("Fit: \(piece.fit)").font(.callout).lineLimit(1).padding(.bottom, 0.5)
+                            Text("Type: \(piece.type)").font(.callout).lineLimit(1).padding(.bottom, 0.5)
+                            Text("Size: \(piece.size)").font(.callout).lineLimit(1)
                         }
                         .frame(width: 165, alignment: .leading)
                         VStack(alignment: .trailing) {
