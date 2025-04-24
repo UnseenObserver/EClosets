@@ -1,28 +1,22 @@
-//
-//  ClosetView.swift
-//  ECloset
-//
-//  Created by HPro2 on 4/15/25.
-//
-
+import SwiftData
 import SwiftUICore
-import UIKit
 import SwiftUI
+import _SwiftData_SwiftUI
 
 struct ClosetView: View {
     @State private var isPresentedEditView: Bool = false
     @State private var isPresentedAddView: Bool = false
-    let color: Color = .white
-    let screenHeight = UIScreen.main.bounds.height
-    let piece: Piece = Piece()
+    @State private var selectedPiece: Piece?
     
+    // Query to fetch all pieces
+    @Query private var pieces: [Piece]
     
     var body: some View {
         VStack {
             HStack {
                 Spacer(minLength: 10)
                 Button() {
-                    
+                    // Sort functionality could be added here
                 } label: {
                     Label("Sort", systemImage: "line.horizontal.3.decrease.circle")
                 }
@@ -36,41 +30,60 @@ struct ClosetView: View {
                 Spacer(minLength: 10)
             }
             .padding(5)
-            List {
-                ClosetCell(color: color, piece: piece)
-                    .frame(width: 360)
-                    .padding(0)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button() {
-                            isPresentedEditView = true
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(.accentColor)
+            
+            if pieces.isEmpty {
+                ContentUnavailableView("Your Closet is Empty",
+                                      systemImage: "tshirt",
+                                      description: Text("Tap the + button to add clothing items"))
+            } else {
+                List {
+                    ForEach(pieces) { piece in
+                        ClosetCell(color: piece.getSwiftColor(), piece: piece)
+                            .frame(width: 360)
+                            .padding(0)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button() {
+                                    selectedPiece = piece
+                                    isPresentedEditView = true
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.accentColor)
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    // Favorite functionality could be added here
+                                } label: {
+                                    Label("Favorite", systemImage: "star")
+                                }
+                                .tint(.indigo)
+                            }
                     }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            
-                        } label: {
-                            Label("Favorite", systemImage: "star")
-                        }
-                        .tint(.indigo)
-                    }
-                
+                    .onDelete(perform: deletePieces)
+                }
+                .contentMargins(10)
             }
-            .contentMargins(10)
         }
         .sheet(isPresented: $isPresentedEditView) {
-            EditView(piece: piece)
-                .presentationDetents([.large])
+            if let selectedPiece = selectedPiece {
+                EditView(piece: selectedPiece)
+                    .presentationDetents([.large])
+            }
         }
         .sheet(isPresented: $isPresentedAddView) {
             AddView()
-                .presentationDetents([.fraction(1)]) // iOS 16+ for variable height
+                .presentationDetents([.fraction(1)])
         }
     }
     
-    func newPiece() {
-        print("HI")
+    // Function to delete pieces
+    func deletePieces(at offsets: IndexSet) {
+        @Environment(\.modelContext) var modelContext
+        
+        for index in offsets {
+            modelContext.delete(pieces[index])
+        }
+        
+        try? modelContext.save()
     }
 }

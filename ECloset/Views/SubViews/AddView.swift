@@ -7,9 +7,14 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct AddView: View {
-    @ObservedObject var piece: Piece = Piece()
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    
+    // Create a new piece for adding to database
+    @State private var newPiece = Piece()
     
     @State private var pickerItem: PhotosPickerItem?
     @State private var displayedImage: Image?
@@ -24,168 +29,188 @@ struct AddView: View {
     @State private var nameAlertShowing: Bool = false
     @State private var ownerAlertShowing: Bool = false
     
-    
-
     var body: some View {
-        VStack {
-            GeometryReader { geometry in
-                VStack {
-                    
-                    VStack() {
-                        PhotosPicker(
-                            selection: $pickerItem,
-                            matching: .images,
-                            photoLibrary: .shared()
-                        ) {
-                            // Your “button” label
-                            Group {
-                                if let img = displayedImage {
-                                    img
-                                        .resizable()
-                                        .scaledToFit()
-                                } else {
-                                    Image(systemName: "person.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: geometry.size.width)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        .onChange(of: pickerItem) { oldItem, newItem in
-                            guard let item = newItem else { return }
-                            Task {
-                                do {
-                                    // Load as Data (Transferable)
-                                    if let data = try await item.loadTransferable(type: Data.self),
-                                       let ui = UIImage(data: data) {
-                                        // Back on the main thread, update your SwiftUI Image
-                                        await MainActor.run {
-                                            displayedImage = Image(uiImage: ui)
-                                        }
+        NavigationStack {
+            VStack {
+                GeometryReader { geometry in
+                    VStack {
+                        
+                        VStack() {
+                            PhotosPicker(
+                                selection: $pickerItem,
+                                matching: .images,
+                                photoLibrary: .shared()
+                            ) {
+                                // Your "button" label
+                                Group {
+                                    if let img = displayedImage {
+                                        img
+                                            .resizable()
+                                            .scaledToFit()
+                                    } else {
+                                        Image(systemName: "person.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .foregroundStyle(.secondary)
                                     }
-                                } catch {
-                                    print("❌ Failed to load image data:", error)
                                 }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: geometry.size.width)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
-                        }
-                        
-                        .padding()
-                        
-                        Text(piece.name)
-                            .font(.title)
-                            .fontWeight(.heavy)
-                            .frame(maxWidth: .infinity)
-                            .onTapGesture {
-                                nameAlertShowing = true
-                            }
-                        ScrollView() {
-                            VStack {
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: piece.type, width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            tapHandler(changingTitle: "Types", changingDictionary: Dictionaries.typesEncode)
-                                        }
-                                    InfoCell(displayedInfo: piece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            if piece.type != "Type" {
-                                                tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: piece, flipped: false))
-                                            } else {
-                                                alertShowing = true
+                            .onChange(of: pickerItem) { oldItem, newItem in
+                                guard let item = newItem else { return }
+                                Task {
+                                    do {
+                                        // Load as Data (Transferable)
+                                        if let data = try await item.loadTransferable(type: Data.self),
+                                           let ui = UIImage(data: data) {
+                                            // Back on the main thread, update your SwiftUI Image
+                                            await MainActor.run {
+                                                displayedImage = Image(uiImage: ui)
+                                                newPiece.image = data
                                             }
-                                                      }
-                                    Spacer(minLength: 0)
-                                }
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: piece.material, width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            tapHandler(changingTitle: "Materials", changingDictionary: Dictionaries.materialEncode)
                                         }
-                                    InfoCell(displayedInfo: piece.season, width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            tapHandler(changingTitle: "Seasons", changingDictionary: Dictionaries.seasonEncode)
-                                        }
-                                    InfoCell(displayedInfo: piece.size, width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            tapHandler(changingTitle: "Sizes", changingDictionary: Dictionaries.sizesEncode)
-                                        }
-                                    Spacer(minLength: 0)
-                                }
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: piece.brand, width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
-                                        }
-                                    ColorPreviewBox(color: selectedColor, width: 168, height: 50, cornerRadius: 15)
-                                    .overlay(
-                                        ColorPicker("", selection: $selectedColor, supportsOpacity: false)
-                                            .labelsHidden()
-                                            .opacity(0.015)
-                                    )
-                                    .frame(width: 168, height: 50)
-                                    Spacer(minLength: 0)
-                                }
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
-                                        .onTapGesture {
-                                            ownerAlertShowing = true
-                                        }
-                                    Spacer(minLength: 0)
-                                }
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: piece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
-                                    Spacer(minLength: 0)
+                                    } catch {
+                                        print("❌ Failed to load image data:", error)
+                                    }
                                 }
                             }
-                            .frame(width: geometry.size.width)
-                            .fixedSize()
+                            
+                            .padding()
+                            
+                            Text(newPiece.name)
+                                .font(.title)
+                                .fontWeight(.heavy)
+                                .frame(maxWidth: .infinity)
+                                .onTapGesture {
+                                    nameAlertShowing = true
+                                }
+                            ScrollView() {
+                                VStack {
+                                    HStack {
+                                        Spacer(minLength: 0)
+                                        InfoCell(displayedInfo: newPiece.type, width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                tapHandler(changingTitle: "Types", changingDictionary: Dictionaries.typesEncode)
+                                            }
+                                        InfoCell(displayedInfo: newPiece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                if newPiece.type != "Type" {
+                                                    tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: newPiece, flipped: false))
+                                                } else {
+                                                    alertShowing = true
+                                                }
+                                                          }
+                                        Spacer(minLength: 0)
+                                    }
+                                    HStack {
+                                        Spacer(minLength: 0)
+                                        InfoCell(displayedInfo: newPiece.material, width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                tapHandler(changingTitle: "Materials", changingDictionary: Dictionaries.materialEncode)
+                                            }
+                                        InfoCell(displayedInfo: newPiece.season, width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                tapHandler(changingTitle: "Seasons", changingDictionary: Dictionaries.seasonEncode)
+                                            }
+                                        InfoCell(displayedInfo: newPiece.size, width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                tapHandler(changingTitle: "Sizes", changingDictionary: Dictionaries.sizesEncode)
+                                            }
+                                        Spacer(minLength: 0)
+                                    }
+                                    HStack {
+                                        Spacer(minLength: 0)
+                                        InfoCell(displayedInfo: newPiece.brand, width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
+                                            }
+                                        ColorPreviewBox(color: selectedColor, width: 168, height: 50, cornerRadius: 15)
+                                        .overlay(
+                                            ColorPicker("", selection: $selectedColor, supportsOpacity: false)
+                                                .labelsHidden()
+                                                .opacity(0.015)
+                                        )
+                                        .frame(width: 168, height: 50)
+                                        Spacer(minLength: 0)
+                                    }
+                                    HStack {
+                                        Spacer(minLength: 0)
+                                        InfoCell(displayedInfo: newPiece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                            .onTapGesture {
+                                                ownerAlertShowing = true
+                                            }
+                                        Spacer(minLength: 0)
+                                    }
+                                    HStack {
+                                        Spacer(minLength: 0)
+                                        InfoCell(displayedInfo: newPiece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
+                                        Spacer(minLength: 0)
+                                    }
+                                }
+                                .frame(width: geometry.size.width)
+                                .fixedSize()
+                            }
                         }
                     }
                 }
             }
-        }
-        .sheet(item: $popupData) { data in
-          EditPopUp(piece: piece,
-                    changingTitle: data.title,
-                    dictionary: data.dictionary)
-            .presentationDetents([.fraction(0.473)])         // half-height
-            .presentationDragIndicator(.visible)           // show the grab handle
-        }
-        .alert("Type Must Have Value", isPresented: $alertShowing) {
-            
-        }
-        .textFieldAlert(
-            isPresented: $nameAlertShowing,
-                    title: "Name",
-                    message: "The Name of the Piece",
-                    placeholder: "Name",
-                    action: { input in
-                        if let input = input {
-                            piece.name = input
+            .sheet(item: $popupData) { data in
+              EditPopUp(piece: newPiece,
+                        changingTitle: data.title,
+                        dictionary: data.dictionary)
+                .presentationDetents([.fraction(0.473)])         // half-height
+                .presentationDragIndicator(.visible)           // show the grab handle
+            }
+            .alert("Type Must Have Value", isPresented: $alertShowing) {
+                
+            }
+            .textFieldAlert(
+                isPresented: $nameAlertShowing,
+                        title: "Name",
+                        message: "The Name of the Piece",
+                        placeholder: "Name",
+                        action: { input in
+                            if let input = input {
+                                newPiece.name = input
+                            }
                         }
-                    }
-                )
-        .textFieldAlert(
-            isPresented: $ownerAlertShowing,
-                    title: "Owner",
-                    message: "The Owner of this Piece",
-                    placeholder: "Owner",
-                    action: { input in
-                        if let input = input {
-                            piece.owner = input
+                    )
+            .textFieldAlert(
+                isPresented: $ownerAlertShowing,
+                        title: "Owner",
+                        message: "The Owner of this Piece",
+                        placeholder: "Owner",
+                        action: { input in
+                            if let input = input {
+                                newPiece.owner = input
+                            }
                         }
+                    )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        // Update color values from selectedColor
+                        let uiColor = UIColor(selectedColor)
+                        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+                        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                        
+                        newPiece.colorR = Double(red * 255)
+                        newPiece.colorG = Double(green * 255)
+                        newPiece.colorB = Double(blue * 255)
+                        
+                        // Generate unique ID
+                        newPiece.uniqueID = generateUniqueID(for: newPiece)
+                        
+                        // Add to model context
+                        modelContext.insert(newPiece)
+                        try? modelContext.save()
+                        dismiss()
                     }
-                )
-        
-        
-
+                }
+            }
+        }
     }
     
     func tapHandler(changingTitle: String, changingDictionary: [String:String]) {
@@ -194,8 +219,25 @@ struct AddView: View {
         popupData = EditPopupData(title: changingTitle, dictionary: changingDictionary)
     }
     
-//    var owner: String
-//    var uniqueID: String
+    // Function to generate a unique ID for a piece
+    func generateUniqueID(for piece: Piece) -> String {
+        // Format: "RRR,GGG,BBB,SS,TT,FF,MMM,S,BBB,OOOOOOOOOOOOOOOOOO"
+        // Where RRR=Red, GGG=Green, BBB=Blue, SS=Size, TT=Type, FF=Fit, MMM=Material, S=Season, BBB=Brand, O=Owner
+        let red = Int(piece.colorR)
+        let green = Int(piece.colorG)
+        let blue = Int(piece.colorB)
+        
+        let typeCode = Dictionaries.typesEncode[piece.type] ?? "NA"
+        let sizeCode = Dictionaries.sizesEncode[piece.size] ?? "NA"
+        let fitDictionary = Dictionaries().getFitDictionary(piece: piece, flipped: false)
+        let fitCode = fitDictionary[piece.fit] ?? "NA"
+        let materialCode = Dictionaries.materialEncode[piece.material] ?? "NA"
+        let seasonCode = Dictionaries.seasonEncode[piece.season] ?? "NA"
+        let brandCode = Dictionaries.clothingBrandsEncode[piece.brand] ?? "NA"
+        
+        return String(format: "%03d,%03d,%03d,%@,%@,%@,%@,%@,%@,%@",
+                     red, green, blue, sizeCode, typeCode, fitCode, materialCode, seasonCode, brandCode, piece.owner)
+    }
 }
 
 extension View {
@@ -217,6 +259,7 @@ extension View {
         )
     }
 }
+
 
 
 
