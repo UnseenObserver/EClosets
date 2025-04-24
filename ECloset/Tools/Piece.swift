@@ -94,8 +94,24 @@ class Piece: ObservableObject {
         return seasonString
     }
     
-    func getID(red: Int, green: Int, blue: Int, size: Int, type: String, fit: String, material: String, season: Int, brand: String, owner: String) {
+    // Function to generate a unique ID for a piece
+    func generateUniqueID(for piece: Piece) -> String {
+        // Format: "RRR,GGG,BBB,SS,TT,FF,MMM,S,BBB,OOOOOOOOOOOOOOOOOO"
+        // Where RRR=Red, GGG=Green, BBB=Blue, SS=Size, TT=Type, FF=Fit, MMM=Material, S=Season, BBB=Brand, O=Owner
+        let red = Int(piece.colorR)
+        let green = Int(piece.colorG)
+        let blue = Int(piece.colorB)
+        
+        let typeCode = Dictionaries.typesEncode[piece.type] ?? "NA"
+        let sizeCode = Dictionaries.sizesEncode[piece.size] ?? "NA"
+        let fitDictionary = Dictionaries().getFitDictionary(piece: piece, flipped: false)
+        let fitCode = fitDictionary[piece.fit] ?? "NA"
+        let materialCode = Dictionaries.materialEncode[piece.material] ?? "NA"
+        let seasonCode = Dictionaries.seasonEncode[piece.season] ?? "NA"
+        let brandCode = Dictionaries.clothingBrandsEncode[piece.brand] ?? "NA"
+        
+        return String(format: "%03d,%03d,%03d,%@,%@,%@,%@,%@,%@,%@",
+                     red, green, blue, sizeCode, typeCode, fitCode, materialCode, seasonCode, brandCode, piece.owner)
     }
-    
     
 }

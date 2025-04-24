@@ -28,6 +28,7 @@ struct AddView: View {
     @State private var alertShowing: Bool = false
     @State private var nameAlertShowing: Bool = false
     @State private var ownerAlertShowing: Bool = false
+    @State private var colorPickerShowing: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -127,11 +128,9 @@ struct AddView: View {
                                                 tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
                                             }
                                         ColorPreviewBox(color: selectedColor, width: 168, height: 50, cornerRadius: 15)
-                                        .overlay(
-                                            ColorPicker("", selection: $selectedColor, supportsOpacity: false)
-                                                .labelsHidden()
-                                                .opacity(0.015)
-                                        )
+                                            .onTapGesture{
+                                                colorPickerShowing = true
+                                            }
                                         .frame(width: 168, height: 50)
                                         Spacer(minLength: 0)
                                     }
@@ -166,6 +165,24 @@ struct AddView: View {
             .alert("Type Must Have Value", isPresented: $alertShowing) {
                 
             }
+            .sheet(isPresented: $colorPickerShowing) {
+                ColorPickerPopUp(title: "Color of Piece", selectedColor: selectedColor) { color in
+                    selectedColor = color
+                    let uiColor = UIColor(selectedColor)
+                    var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+                    uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                    
+                    newPiece.colorR = Double(red * 255)
+                    newPiece.colorG = Double(green * 255)
+                    newPiece.colorB = Double(blue * 255)
+                    
+                    colorPickerShowing = false
+                }
+                .padding(.top, 8)
+                .background(.background)
+                .interactiveDismissDisabled(true)
+                .presentationDetents([.height(640)])
+            }
             .textFieldAlert(
                 isPresented: $nameAlertShowing,
                         title: "Name",
@@ -191,17 +208,9 @@ struct AddView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        // Update color values from selectedColor
-                        let uiColor = UIColor(selectedColor)
-                        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-                        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-                        
-                        newPiece.colorR = Double(red * 255)
-                        newPiece.colorG = Double(green * 255)
-                        newPiece.colorB = Double(blue * 255)
-                        
+                      
                         // Generate unique ID
-                        newPiece.uniqueID = generateUniqueID(for: newPiece)
+                        newPiece.uniqueID = Piece().generateUniqueID(for: newPiece)
                         
                         // Add to model context
                         modelContext.insert(newPiece)
@@ -219,25 +228,7 @@ struct AddView: View {
         popupData = EditPopupData(title: changingTitle, dictionary: changingDictionary)
     }
     
-    // Function to generate a unique ID for a piece
-    func generateUniqueID(for piece: Piece) -> String {
-        // Format: "RRR,GGG,BBB,SS,TT,FF,MMM,S,BBB,OOOOOOOOOOOOOOOOOO"
-        // Where RRR=Red, GGG=Green, BBB=Blue, SS=Size, TT=Type, FF=Fit, MMM=Material, S=Season, BBB=Brand, O=Owner
-        let red = Int(piece.colorR)
-        let green = Int(piece.colorG)
-        let blue = Int(piece.colorB)
-        
-        let typeCode = Dictionaries.typesEncode[piece.type] ?? "NA"
-        let sizeCode = Dictionaries.sizesEncode[piece.size] ?? "NA"
-        let fitDictionary = Dictionaries().getFitDictionary(piece: piece, flipped: false)
-        let fitCode = fitDictionary[piece.fit] ?? "NA"
-        let materialCode = Dictionaries.materialEncode[piece.material] ?? "NA"
-        let seasonCode = Dictionaries.seasonEncode[piece.season] ?? "NA"
-        let brandCode = Dictionaries.clothingBrandsEncode[piece.brand] ?? "NA"
-        
-        return String(format: "%03d,%03d,%03d,%@,%@,%@,%@,%@,%@,%@",
-                     red, green, blue, sizeCode, typeCode, fitCode, materialCode, seasonCode, brandCode, piece.owner)
-    }
+   
 }
 
 extension View {

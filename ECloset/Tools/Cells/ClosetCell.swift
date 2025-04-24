@@ -12,6 +12,7 @@ struct ClosetCell: View {
     @State var imageData: Data?
     let color: Color
     let piece: Piece
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {

@@ -6,7 +6,7 @@ import _SwiftData_SwiftUI
 struct ClosetView: View {
     @State private var isPresentedEditView: Bool = false
     @State private var isPresentedAddView: Bool = false
-    @State private var selectedPiece: Piece?
+    @State private var selectedPiece: Piece = Piece()
     @State private var showDeleteAlert: Bool = false
     @State private var pieceToDelete: Piece?
     @State private var showSortOptions: Bool = false
@@ -143,10 +143,9 @@ struct ClosetView: View {
             }
         }
         .sheet(isPresented: $isPresentedEditView) {
-            if let selectedPiece = selectedPiece {
-                EditView(piece: selectedPiece)
-                    .presentationDetents([.large])
-            }
+            EditView(piece: selectedPiece)
+                .presentationDetents([.large])
+            
         }
         .sheet(isPresented: $isPresentedAddView) {
             AddView()
@@ -186,13 +185,10 @@ struct ClosetView: View {
         }
     }
     
-    // Helper function to update sort order when switching sort options
     private func updateSortOrder() {
-        // When switching to a new sort option, default to ascending
         sortOrder = .ascending
     }
     
-    // Function to delete pieces by index offsets (original method)
     func deletePieces(at offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(pieces[index])
@@ -201,7 +197,6 @@ struct ClosetView: View {
         try? modelContext.save()
     }
     
-    // Function to delete a specific piece
     func deleteSpecificPiece(_ piece: Piece) {
         modelContext.delete(piece)
         try? modelContext.save()

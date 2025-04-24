@@ -133,7 +133,6 @@ struct EditView: View {
                                     Spacer()
                                 }
                             }
-                            .padding()
                         }
                     }
                 }
@@ -162,12 +161,11 @@ struct EditView: View {
                     piece.colorR = Double(red * 255)
                     piece.colorG = Double(green * 255)
                     piece.colorB = Double(blue * 255)
-                    colorPickerShowing = false
                 }
                 .padding(.top, 8)
                 .background(.background)
-                .interactiveDismissDisabled(true)
-                .presentationDetents([.height(640)])
+                .interactiveDismissDisabled(false)
+                .presentationDetents([.fraction(0.57), .height(640)])
             }
             .alert("Type Must Have Value", isPresented: $alertShowing) {}
             .textFieldAlert(isPresented: $nameAlertShowing,
