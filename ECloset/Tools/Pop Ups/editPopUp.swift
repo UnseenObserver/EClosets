@@ -11,22 +11,34 @@ import SwiftUI
 struct EditPopUp: View {
     @ObservedObject var piece: Piece
     let changingTitle: String
-    let dictionary: [String:String]
+    var dictionary: [String:String]
 
     @State private var searchText: String = ""
     @Environment(\.dismiss) private var dismiss
 
     // 1. Compute a filtered list of keys
     private var filteredKeys: [String] {
-        dictionary.keys
-            .filter { key in
-                // If searchText is empty, include everything.
-                // Otherwise only keys containing the text (case‐insensitive).
-                searchText.isEmpty
+        if changingTitle != "Sizes" {
+            dictionary.keys
+                .filter { key in
+                    // If searchText is empty, include everything.
+                    // Otherwise only keys containing the text (case‐insensitive).
+                    searchText.isEmpty
                     ? true
                     : key.localizedCaseInsensitiveContains(searchText)
-            }
-            .sorted()
+                }
+                .sorted()
+        } else {
+            dictionary.values
+                .filter { values in
+                    // If searchText is empty, include everything.
+                    // Otherwise only keys containing the text (case‐insensitive).
+                    searchText.isEmpty
+                    ? true
+                    : values.localizedCaseInsensitiveContains(searchText)
+                }
+                .sorted()
+        }
     }
 
     var body: some View {
@@ -96,6 +108,8 @@ struct EditPopUp: View {
             break
         }
     }
+    
+    
 }
 
 

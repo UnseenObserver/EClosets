@@ -94,10 +94,7 @@ class Piece: ObservableObject {
         return seasonString
     }
     
-    // Function to generate a unique ID for a piece
     func generateUniqueID(for piece: Piece) -> String {
-        // Format: "RRR,GGG,BBB,SS,TT,FF,MMM,S,BBB,OOOOOOOOOOOOOOOOOO"
-        // Where RRR=Red, GGG=Green, BBB=Blue, SS=Size, TT=Type, FF=Fit, MMM=Material, S=Season, BBB=Brand, O=Owner
         let red = Int(piece.colorR)
         let green = Int(piece.colorG)
         let blue = Int(piece.colorB)

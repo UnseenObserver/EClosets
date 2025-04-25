@@ -11,7 +11,6 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // 🏠 Main Tab View
             TabView(selection: $selectedTab) {
                 Tab("Closet", systemImage: "duffle.bag.fill", value: 0) {
                     ClosetView()

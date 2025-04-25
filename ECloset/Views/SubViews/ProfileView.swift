@@ -1,11 +1,9 @@
-// ProfileView.swift with SwiftData stats:
 import SwiftUI
 import SwiftData
 
 struct ProfileView: View {
     @Query private var pieces: [Piece]
     
-    // Calculate stats
     var totalItems: Int {
         pieces.count
     }

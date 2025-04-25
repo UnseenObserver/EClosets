@@ -1,4 +1,3 @@
-// SearchView.swift should be created with SwiftData integration:
 import SwiftUI
 import SwiftData
 

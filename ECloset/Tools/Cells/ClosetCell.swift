@@ -17,7 +17,7 @@ struct ClosetCell: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 Group {
-                    if let imageData,
+                    if let imageData = piece.image,
                        let uiImage = UIImage(data: imageData) {
                         Image(uiImage: uiImage)
                             .resizable()

@@ -121,7 +121,7 @@ struct ClosetView: View {
                             }
                             .swipeActions(edge: .leading) {
                                 Button {
-                                    // Favorite functionality could be added here
+                                    
                                 } label: {
                                     Label("Favorite", systemImage: "star")
                                 }

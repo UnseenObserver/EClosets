@@ -42,7 +42,7 @@ struct AddView: View {
                                 matching: .images,
                                 photoLibrary: .shared()
                             ) {
-                                // Your "button" label
+
                                 Group {
                                     if let img = displayedImage {
                                         img
@@ -63,10 +63,8 @@ struct AddView: View {
                                 guard let item = newItem else { return }
                                 Task {
                                     do {
-                                        // Load as Data (Transferable)
                                         if let data = try await item.loadTransferable(type: Data.self),
                                            let ui = UIImage(data: data) {
-                                            // Back on the main thread, update your SwiftUI Image
                                             await MainActor.run {
                                                 displayedImage = Image(uiImage: ui)
                                                 newPiece.image = data
@@ -77,7 +75,6 @@ struct AddView: View {
                                     }
                                 }
                             }
-                            
                             .padding()
                             
                             Text(newPiece.name)
@@ -159,8 +156,8 @@ struct AddView: View {
               EditPopUp(piece: newPiece,
                         changingTitle: data.title,
                         dictionary: data.dictionary)
-                .presentationDetents([.fraction(0.473)])         // half-height
-                .presentationDragIndicator(.visible)           // show the grab handle
+                .presentationDetents([.fraction(0.473)])     
+                .presentationDragIndicator(.visible)
             }
             .alert("Type Must Have Value", isPresented: $alertShowing) {
                 
@@ -209,10 +206,8 @@ struct AddView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                       
-                        // Generate unique ID
                         newPiece.uniqueID = Piece().generateUniqueID(for: newPiece)
                         
-                        // Add to model context
                         modelContext.insert(newPiece)
                         try? modelContext.save()
                         dismiss()

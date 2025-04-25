@@ -47,7 +47,7 @@ struct EditView: View {
                             .frame(height: geometry.size.width)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                        .onChange(of: pickerItem) { newItem in
+                        .onChange(of: pickerItem) { oldItem, newItem in
                             guard let item = newItem else { return }
                             Task {
                                 if let data = try? await item.loadTransferable(type: Data.self),
@@ -138,11 +138,9 @@ struct EditView: View {
                 }
             }
             .onAppear {
-                // Initialize displayed image
                 if let data = piece.image, let uiImage = UIImage(data: data) {
                     displayedImage = Image(uiImage: uiImage)
                 }
-                // Initialize selected color
                 selectedColor = piece.getSwiftColor()
             }
             .sheet(item: $popupData) { data in
