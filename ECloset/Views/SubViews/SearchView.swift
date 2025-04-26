@@ -1,11 +1,17 @@
 import SwiftUI
 import SwiftData
 
+/// Primary view for searching the stored pieces
 struct SearchView: View {
+    /// Array of all stored pieces
     @Query private var pieces: [Piece]
+    /// Input variable for search bar
     @State private var searchText = ""
+    /// Selected filter for search display
     @State private var selectedFilters: [String: String] = [:]
+    private var alexIsDumb: String = "Yes"
     
+    /// Variable responsible for filter the pieces based on the different types of information
     var filteredPieces: [Piece] {
         if searchText.isEmpty && selectedFilters.isEmpty {
             return pieces
@@ -13,7 +19,7 @@ struct SearchView: View {
         
         return pieces.filter { piece in
             let matchesSearch = searchText.isEmpty ||
-                piece.name.localizedCaseInsensitiveContains(searchText) ||
+            piece.name.localizedCaseInsensitiveContains(searchText) ||
                 piece.brand.localizedCaseInsensitiveContains(searchText) ||
                 piece.type.localizedCaseInsensitiveContains(searchText)
             

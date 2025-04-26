@@ -43,27 +43,40 @@ struct EditPopUp: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                // 2. Show "no results" when appropriate
-                if filteredKeys.isEmpty {
-                    Text("No \(changingTitle) found")
-                        .foregroundColor(.secondary)
-                } else {
-                    ForEach(filteredKeys, id: \.self) { key in
-                        Text(key)
+            if filteredKeys.isEmpty {
+                List {
+                    // 2. Show "no results" when appropriate
+                    if filteredKeys.isEmpty {
+                        Text("No \(changingTitle) found")
+                            .foregroundColor(.secondary)
+                    } else {
+                        Text("Unkown")
                             .onTapGesture {
-                                applyChange(for: key)
+                                applyChange(for: "Unkown")
                                 dismiss()
                             }
+                        Section(changingTitle) {
+                            ForEach(filteredKeys, id: \.self) { key in
+                                if key == "Unknown" {
+                                    
+                                } else {
+                                    Text(key)
+                                        .onTapGesture {
+                                            applyChange(for: key)
+                                            dismiss()
+                                        }
+                                }
+                            }
+                        }
                     }
                 }
+                .searchable(
+                    text: $searchText,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "Search \(changingTitle)…"
+                )
+                .navigationTitle(changingTitle)
             }
-            .searchable(
-                text: $searchText,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search \(changingTitle)…"
-            )
-            .navigationTitle(changingTitle)
         }
     }
 

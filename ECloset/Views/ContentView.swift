@@ -3,11 +3,10 @@ import UIKit
 import _PhotosUI_SwiftUI
 import SwiftUICore
 
+/// The main view, containg the tabview that is the top most level interaction.
 struct ContentView: View {
+    /// The tab the is activly showing. Updates automatically and can be used to switch or see when the user is.
     @Binding var selectedTab: Int
-    let color: Color = .blue
-    let piece: Piece = Piece()
-    
     
     var body: some View {
         ZStack {
@@ -35,6 +34,7 @@ struct ContentView: View {
     }
 }
 
+/// To send an @State value to the preview to allow for more efficent testing
 struct StatefulPreviewWrapper<Value, Content: View>: View {
     @State private var value: Value
     private var content: (Binding<Value>) -> Content

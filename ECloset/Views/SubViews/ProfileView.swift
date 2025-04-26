@@ -4,15 +4,18 @@ import SwiftData
 struct ProfileView: View {
     @Query private var pieces: [Piece]
     
+    /// Calculate the total number of items to display on the profile tab
     var totalItems: Int {
         pieces.count
     }
     
+    /// Calculates the number of pieces by the different types of clothing
     var itemsByType: [String: Int] {
         Dictionary(grouping: pieces, by: { $0.type })
             .mapValues { $0.count }
     }
     
+    /// Calculates the number of pieces owner by different owners
     var itemsByOwner: [String: Int] {
         Dictionary(grouping: pieces, by: { $0.owner })
             .mapValues { $0.count }

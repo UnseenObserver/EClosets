@@ -3,24 +3,35 @@ import SwiftUICore
 import SwiftUI
 import _SwiftData_SwiftUI
 
+/// The default view that display the pieces. Along with being were the deleting and editing of pieces takes place.
 struct ClosetView: View {
+    /// Boolean to present the edit view
     @State private var isPresentedEditView: Bool = false
+    /// Boolean to present the add view
     @State private var isPresentedAddView: Bool = false
-    @State private var selectedPiece: Piece = Piece()
+    /// The selected piece; used for sending the correct piece to the appropiate views
+    @State private var selectedPiece: Piece?
+    /// Boolean for presenting the verification of a delete request
     @State private var showDeleteAlert: Bool = false
+    /// Seperate piece variable used specifically for processing a delete request
     @State private var pieceToDelete: Piece?
+    /// Boolean for presenting the piece sort options popover
     @State private var showSortOptions: Bool = false
+    /// The default option for what the closetview is sorted by unitill changed through the sorting options popup. Defualt = .name
     @State private var sortOption: SortOption = .name
+    /// The defualt direction for the sorting. Defualt = .ascending
     @State private var sortOrder: SortOrder = .ascending
     
+    /// The context of the storage model
     @Environment(\.modelContext) var modelContext
     
-    // Sort options enum
+    /// Sort options enum
     enum SortOption: String, CaseIterable, Identifiable {
       case name, type, color, brand, season
       var id: String { rawValue }
     }
     
+    /// Sort direction for sorting
     enum SortOrder: String, CaseIterable, Identifiable {
         case ascending = "Ascending"
         case descending = "Descending"
@@ -28,10 +39,10 @@ struct ClosetView: View {
         var id: String { self.rawValue }
     }
     
-    // Query to fetch all pieces
+    /// Query to fetch all pieces from storage and input into an array
     @Query(sort: \Piece.name) private var pieces: [Piece]
     
-    // Computed property for sorted pieces
+    /// Computed property for sorted pieces array
     private var sortedPieces: [Piece] {
         switch sortOption {
         case .name:
@@ -185,10 +196,12 @@ struct ClosetView: View {
         }
     }
     
+    /// Helper function to update sort order when switching sort options
     private func updateSortOrder() {
         sortOrder = .ascending
     }
     
+    /// Function to delete pieces by index offsets (original method)
     func deletePieces(at offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(pieces[index])
@@ -197,6 +210,7 @@ struct ClosetView: View {
         try? modelContext.save()
     }
     
+    /// Function to delete a specific piece
     func deleteSpecificPiece(_ piece: Piece) {
         modelContext.delete(piece)
         try? modelContext.save()

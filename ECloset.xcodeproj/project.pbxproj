@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3FCE49F12DBC2450005DDCF3 /* ECloset.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3FCE49F02DBC2450005DDCF3 /* ECloset.docc */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		3FCE49F02DBC2450005DDCF3 /* ECloset.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ECloset.docc; sourceTree = "<group>"; };
 		642A2D192D889EA9002BE1ED /* ECloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,6 +37,7 @@
 		642A2D102D889EA9002BE1ED = {
 			isa = PBXGroup;
 			children = (
+				3FCE49F02DBC2450005DDCF3 /* ECloset.docc */,
 				642A2D1B2D889EA9002BE1ED /* ECloset */,
 				642A2D1A2D889EA9002BE1ED /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FCE49F12DBC2450005DDCF3 /* ECloset.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

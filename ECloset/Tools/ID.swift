@@ -57,4 +57,8 @@ class ID {
     func deleteItem(_ id: String) {
         idDictionary.removeValue(forKey: id)
     }
+    
+    func exportPieces() {
+        //TODO
+    }
 }

@@ -9,26 +9,38 @@ import SwiftUI
 import PhotosUI
 import SwiftData
 
+/// The primary view for adding pieces
 struct AddView: View {
+    /// The context of the storage model
     @Environment(\.modelContext) private var modelContext
+    /// Enviromental trait for automatic saving for the dismissing of the popover
     @Environment(\.dismiss) private var dismiss
-    
-    // Create a new piece for adding to database
-    @State private var newPiece = Piece()
-    
+    /// The adapting item that has been picked inside the photopicker
     @State private var pickerItem: PhotosPickerItem?
+    /// Image data variable that is used to take the image from the photopicker before sending the data to the piece.image
     @State private var displayedImage: Image?
+    /// Scope scale factor for the X axis CGFloat that is sent to the infoCells for acurate and constant formating
     @State private var scaleFactorX: CGFloat = 1
+    /// Scope scale factor for the Y axis CGFloat that is sent to the infoCells for acurate and constant formating
     @State private var scaleFactorY: CGFloat = 1
-    @State private var isPresented: Bool = false
+    /// String variable that is sent to the the editPopUp. I is the determining variable to which the different fit dictionaries, and the text around the pop up
     @State private var changingTitle: String = "Type Of Cloths"
+    /// Dictionary variable that is sent to the editPopUp. It is used to determine the dictionary that the data is taken from
     @State private var changingDictionary: [String:String] = Dictionaries.typesEncode
+    /// Transitional Variable that is used to hold all the sent data to the editPopUp for easy data managment
     @State private var popupData: EditPopupData?
-    @State private var selectedColor: Color = Color.white
+    /// The color that is selected in the colorPreviewBox before it is set to the piece.color's
+    @State private var selectedColor: Color = .white
+    /// Boolean used to present the warning to the user that piece.type must have a value before selecting a fit in the editView. This is due to the type if clothing being the determining factor of the sent dictionary for the editPopUp
     @State private var alertShowing: Bool = false
-    @State private var nameAlertShowing: Bool = false
-    @State private var ownerAlertShowing: Bool = false
+    /// Boolean used to present the colorPickerPopUp
     @State private var colorPickerShowing: Bool = false
+    /// Boolean used to present the nameAlertPopUp
+    @State private var nameAlertShowing: Bool = false
+    /// Boolean used to present the ownerAlertPopUp
+    @State private var ownerAlertShowing: Bool = false
+    /// Transitional Piece Varable used to build the new piece before sending it to the modals storage context
+    @State private var newPiece = Piece()
     
     var body: some View {
         NavigationStack {
@@ -217,6 +229,10 @@ struct AddView: View {
         }
     }
     
+    /// used in the .onTapGesture for the infoCell, with its main funcition consolidating and verifiy the data being sent to the infoCell
+    /// - Parameters:
+    ///   - changingTitle: The string variable that corilates with the thing being changed so that the editPopUp can be used for any variable
+    ///   - changingDictionary: The dictionary varibale that is sent to display all the data from the global dictionaries of information
     func tapHandler(changingTitle: String, changingDictionary: [String:String]) {
         self.changingTitle = changingTitle
         self.changingDictionary = changingDictionary
@@ -226,7 +242,16 @@ struct AddView: View {
    
 }
 
+///Extention to allow for an alert for the name and owner variables of the piece
 extension View {
+    /// Custom Alert with textfeild
+    /// - Parameters:
+    ///   - isPresented: Binded Boolean to determine if the view is presented or not
+    ///   - title: The title of the alert
+    ///   - message: The message of the alert
+    ///   - placeholder: The placeholder text in the text feild
+    ///   - action: The function or exection of the view with the string recived
+    /// - Returns: the variable returned
     func textFieldAlert(
         isPresented: Binding<Bool>,
         title: String,

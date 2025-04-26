@@ -1,6 +1,8 @@
 import Foundation
 
 extension Dictionary where Value: Hashable {
+    /// Function to take in a dictionary anf flip the values and keys
+    /// - Returns: New flipped dictionary
     func flip() -> [Value: Key] {
         var flippedDict: [Value: Key] = [:]
         for (key, value) in self {
@@ -10,10 +12,13 @@ extension Dictionary where Value: Hashable {
     }
 }
 
+/// Class containing all data storage lookup baased data
 class Dictionaries {
     init() { }
     
+    /// Dictionary containing all pickable clothing brands
     static let clothingBrandsEncode: [String: String] = [
+        "Unkown": "UKN",
         "Nike": "NKE",
         "Adidas": "ADS",
         "Puma": "PMA",
@@ -116,6 +121,7 @@ class Dictionaries {
         "Helly Hansen": "HLH"
     ]
     
+    /// Dictionary containing all pickable sizes
     static let sizesEncode: [String: String] = [
         "XXS": "0",
         "XS": "1",
@@ -126,16 +132,21 @@ class Dictionaries {
         "XXL": "6",
         "3XL": "7",
         "4XL": "8",
-        "5XL": "9"
+        "5XL": "9",
+        "Unkown": "10"
     ]
     
+    /// Dictionary containing all pickable seasons
     static let seasonEncode: [String:String] = [
         "Winter": "0",
         "Spring": "1",
         "Summer": "2",
-        "Fall": "3"
+        "Fall": "3",
+        "All Seasons": "4",
+        "Unkown": "5"
     ]
     
+    /// Dictionary containing all pickable materials
     static let materialEncode: [String: String] = [
         "Cotton":      "COT",
         "Wool":        "WOO",
@@ -170,9 +181,11 @@ class Dictionaries {
         "Lace":        "LAC",
         "Canvas":      "CAN",
         "Gabardine":   "GAB",
-        "Crepe":       "CRE"
+        "Crepe":       "CRE",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable types of clothing
     static let typesEncode: [String: String] = [
         "SHIRTS": "SH",
         "PANTS": "PT",
@@ -182,54 +195,68 @@ class Dictionaries {
         "SHORTS": "ST",
         "UNDERWEAR": "UW",
         "SOCKS": "SC",
-        "BRA": "BR"
+        "BRA": "BR",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable shirt fits
     static let shirtFitsEncode: [String: String] = [
         "Slim": "SL",
         "Regular": "RF",
         "Relaxed": "RX",
         "Oversized": "OV",
-        "Boxy": "BX"
+        "Boxy": "BX",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable pants fits
     static let pantsFitsEncode: [String: String] = [
         "Skinny Fit": "SK",
         "Slim Fit": "SL",
         "Regular Fit": "RG",
         "Relaxed Fit": "RX",
-        "Loose Fit": "LS"
+        "Loose Fit": "LS",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable dress fits
     static let dressFitsEncode: [String: String] = [
         "Bodycon": "BC",
         "A-Line": "AL",
         "Empire Waist": "EW",
-        "Shift": "ST"
+        "Shift": "ST",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable skirt fits
     static let skirtFitsEncode: [String: String] = [
         "Pencil": "PL",
         "A-Line": "AL",
         "Pleated": "PT",
-        "Maxi": "MX"
+        "Maxi": "MX",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable coat fits
     static let coatFitsEncode: [String: String] = [
         "Tailored": "TD",
         "Regular": "RG",
         "Relaxed": "RX",
         "Oversized": "OV",
-        "Fitted": "FT"
+        "Fitted": "FT",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable shorts fits
     static let shortsFitsEncode: [String: String] = [
         "Slim": "SL",
         "Regular": "RG",
         "Relaxed": "RX",
-        "Baggy Fit": "BG"
+        "Baggy Fit": "BG",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable underwaer fits
     static let underwearFitsEncode: [String: String] = [
         "Briefs": "BF",
         "Bikinis": "BK",
@@ -252,9 +279,11 @@ class Dictionaries {
         "Thermal": "TH",
         "Postpartum": "PP",
         "Shapewear": "SW",
-        "Tucking": "TK"
+        "Tucking": "TK",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable sock fits
     static let sockFitsEncode: [String: String] = [
         "No-Show": "NS",
         "Ankle": "AK",
@@ -269,9 +298,11 @@ class Dictionaries {
         "Compression": "CP",
         "Thermal": "TH",
         "Sports": "SP",
-        "Diabetic": "DB"
+        "Diabetic": "DB",
+        "Unkown": "UKN"
     ]
     
+    /// Dictionary containing all pickable braFits
     static let braFitsEncode: [String: String] = [
         "T-Shirt": "TS",
         "Push-Up": "PU",
@@ -287,26 +318,46 @@ class Dictionaries {
         "Nursing": "NR",
         "Convertible": "CV",
         "Minimizer": "MN",
-        "Binder": "BR"
+        "Binder": "BR",
+        "Unkown": "UKN"
     ]
     
+    ///Flipped clothing brand Dictionary
     static let clothingBrandsDecode = clothingBrandsEncode.flip()
+    ///Flipped size Dictionary
     static let sizesDecode = sizesEncode.flip()
+    ///Flipped material Dictionary
     static let materialDecode = materialEncode.flip()
+    ///Flipped types Dictionary
     static let typesDecode = typesEncode.flip()
+    ///Flipped season Dictionary
     static let seasonDecode = seasonEncode.flip()
+    ///Flipped shirt fits Dictionary
     static let shirtFitsDecode = shirtFitsEncode.flip()
+    ///Flipped pant fits Dictionary
     static let pantsFitsDecode = pantsFitsEncode.flip()
+    ///Flipped dress fits Dictionary
     static let dressFitsDecode = dressFitsEncode.flip()
+    ///Flipped skirt fits Dictionary
     static let skirtFitsDecode = skirtFitsEncode.flip()
+    ///Flipped coat fits Dictionary
     static let coatFitsDecode = coatFitsEncode.flip()
+    ///Flipped short fits Dictionary
     static let shortsFitsDecode = shortsFitsEncode.flip()
+    ///Flipped underwear fits Dictionary
     static let underwearFitsDecode = underwearFitsEncode.flip()
+    ///Flipped sock fits Dictionary
     static let sockFitsDecode = sockFitsEncode.flip()
+    ///Flipped bra fits Dictionary
     static let braFitsDecode = braFitsEncode.flip()
     
     
-    //Dictionary Stuff
+    
+    /// To get the the fit code from any random fit name and the type of clothing
+    /// - Parameters:
+    ///   - fitS: The normal name of the piece
+    ///   - typeC: the type of clothing
+    /// - Returns: The proper fit code corilatiing with the previded name
     func getFitCode(fitS: String, typeC: String) -> String {
         var fitC: String = ""
         switch getTypeString(typeC: typeC) {
@@ -334,6 +385,12 @@ class Dictionaries {
         return fitC
     }
     
+    
+    /// Function to retrieve the dictionary for any type of clothing
+    /// - Parameters:
+    ///   - piece: The piece provided so the type can be retrieved
+    ///   - flipped: Boolean if the returned dictionary should be flipped or not
+    /// - Returns: The retrieved dictionary for the pieces fit according to its type
     func getFitDictionary(piece: Piece, flipped: Bool) -> [String:String] {
         var placeHolderDictionary: [String:String] = [:]
         
@@ -372,22 +429,10 @@ class Dictionaries {
         typeS = Dictionaries.typesDecode[typeC]!
         return typeS
     }
-    
-    func getSizeInt(sizeC: String) -> String {
-        var sizeS = ""
-        sizeS = Dictionaries.sizesDecode[sizeC]!
-        return sizeS
-    }
-    
-    func getBrandString(brandC: String) -> String {
-        var brandS: String = ""
-        brandS = Dictionaries.clothingBrandsDecode[brandC]!
-        return brandS
-    }
-    
 }
 
 
+/// Class that is reponable for maintaine the storage of the dictionaries to ensure proper data retrieval
 class DictionaryStorage {
     private let filename = "ClosetIdFile.json"
     
@@ -396,6 +441,8 @@ class DictionaryStorage {
             .appendingPathComponent(filename)
     }
     
+    /// Function to save the dictionaries
+    /// - Parameter dictionary: The dictionary being sent to save
     func save(dictionary: [String:[String]]) {
         do {
             let data = try JSONEncoder().encode(dictionary)
@@ -405,6 +452,8 @@ class DictionaryStorage {
         }
     }
     
+    /// Function to load dictonaries from storage
+    /// - Returns: The dictionary that should be stored
     func load() -> [String:[String]] {
         do {
             let data = try Data(contentsOf: fileURL)
