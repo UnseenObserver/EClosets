@@ -10,7 +10,7 @@ struct ClosetView: View {
     /// Boolean to present the add view
     @State private var isPresentedAddView: Bool = false
     /// The selected piece; used for sending the correct piece to the appropiate views
-    @State private var selectedPiece: Piece?
+    @State private var selectedPiece: Piece = Piece()
     /// Boolean for presenting the verification of a delete request
     @State private var showDeleteAlert: Bool = false
     /// Seperate piece variable used specifically for processing a delete request

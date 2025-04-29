@@ -20,9 +20,6 @@ struct ContentView: View {
                 Tab("Profile", systemImage: "person.fill", value: 2) {
                     ProfileView()
                 }
-                Tab("edit", systemImage: "pencil", value: 3) {
-                    EditView(piece: piece)
-                }
             }
         }
     }
