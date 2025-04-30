@@ -227,14 +227,14 @@ struct EditView: View {
                     piece.name = input
                 }
             }
-                            .textFieldAlert(isPresented: $ownerAlertShowing,
-                                            title: "Owner",
-                                            message: "The Owner of this Piece",
-                                            placeholder: "Owner") { input in
-                                if let input = input {
-                                    piece.owner = input
-                                }
-                            }
+            .textFieldAlert(isPresented: $ownerAlertShowing,
+                            title: "Owner",
+                            message: "The Owner of this Piece",
+                            placeholder: "Owner") { input in
+                if let input = input {
+                    piece.owner = input
+                }
+            }
                                             
         }
     }

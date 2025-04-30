@@ -193,15 +193,15 @@ class Dictionaries {
     
     /// Dictionary containing all pickable types of clothing
     static let typesEncode: [String: String] = [
-        "SHIRTS": "SH",
-        "PANTS": "PT",
-        "DRESS": "DR",
-        "SKIRT": "SK",
-        "COAT": "CT",
-        "SHORTS": "ST",
-        "UNDERWEAR": "UW",
-        "SOCKS": "SC",
-        "BRA": "BR",
+        "Shirts": "SH",
+        "Pants": "PT",
+        "Dresses": "DR",
+        "Skirts": "SK",
+        "Coats": "CT",
+        "Shorts": "ST",
+        "Uunderwear": "UW",
+        "Socks": "SC",
+        "Bras": "BR",
         "Unkown": "UKN"
     ]
     
@@ -367,23 +367,23 @@ class Dictionaries {
     func getFitCode(fitS: String, typeC: String) -> String {
         var fitC: String = ""
         switch getTypeString(typeC: typeC) {
-        case "SHIRT":
+        case "Shirt":
             fitC = Dictionaries.shirtFitsEncode[fitS]!
-        case "PANTS":
+        case "Pant":
             fitC = Dictionaries.pantsFitsEncode[fitS]!
-        case "DRESS":
+        case "Dresse":
             fitC = Dictionaries.dressFitsEncode[fitS]!
-        case "SKIRT":
+        case "Skirt":
             fitC = Dictionaries.skirtFitsEncode[fitS]!
-        case "COAT":
+        case "Coat":
             fitC = Dictionaries.coatFitsEncode[fitS]!
-        case "SHORTS":
+        case "Shorts":
             fitC = Dictionaries.shortsFitsEncode[fitS]!
-        case "UNDERWEAR":
+        case "Underwear":
             fitC = Dictionaries.underwearFitsEncode[fitS]!
-        case "SOCK":
+        case "Socks":
             fitC = Dictionaries.sockFitsEncode[fitS]!
-        case "BRA":
+        case "Bra":
             fitC = Dictionaries.braFitsEncode[fitS]!
         default:
             fitC = "ER"
