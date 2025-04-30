@@ -1,3 +1,9 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by Charlotte Pawloski on 3/21/25.
+
 import Foundation
 
 extension Dictionary where Value: Hashable {
@@ -424,6 +430,9 @@ class Dictionaries {
         }
     }
     
+    /// Function to get the String of the type
+    /// - Parameter typeC: The Code for the Type
+    /// - Returns: The String of the Type (Normal Name)
     func getTypeString(typeC: String) -> String {
         var typeS: String = ""
         typeS = Dictionaries.typesDecode[typeC]!

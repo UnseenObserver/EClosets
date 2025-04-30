@@ -2,15 +2,17 @@
 //  ClosetCell.swift
 //  EClosets
 //
-//  Created by HPro2 on 3/21/25.
+//  Created by Charlotte Pawloski on 3/21/25.
 
 import SwiftUI
 import PhotosUI
 
+
+/// Custom View used as cells in the main closet List. Used to display all nessary information along with be the interatcation gate way to editing and deleteing the piece.
 struct ClosetCell: View {
-    @State private var image: PhotosPickerItem?
-    @State var imageData: Data?
+    /// The color being displayed in the colorPreiviewBox present on the closetCell
     let color: Color
+    /// The Piece thats information is to be displayed
     let piece: Piece
     
     var body: some View {
@@ -21,14 +23,17 @@ struct ClosetCell: View {
                        let uiImage = UIImage(data: imageData) {
                         Image(uiImage: uiImage)
                             .resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                             .scaledToFit()
                     } else {
-                        Image(systemName: "person.fill")
+                        Image(systemName: "tshirt")
                             .resizable()
                             .scaledToFit()
                     }
                 }
                 .frame(width: 140, height: 140, alignment: .center)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                
                 
                 
                 VStack(alignment: .leading, spacing: 0) {
@@ -48,7 +53,7 @@ struct ClosetCell: View {
                         .frame(width: 165, alignment: .leading)
                         VStack(alignment: .trailing) {
                             Spacer()
-                            ColorBox(color: color)
+                            ColorPreviewBox(color: color, width: 40, height: 40, cornerRadius: 12)
                                 .padding(0)
                         }
                         .frame(height: 115)

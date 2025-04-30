@@ -2,7 +2,7 @@
 //  Piece.swift
 //  EClosets
 //
-//  Created by HPro2 on 4/1/25.
+//  Created by Charlotte Pawloski on 4/1/25.
 //
 
 import Foundation
@@ -12,20 +12,34 @@ import SwiftUI
 
 
 
+/// The Main class of the pieces that are beign stored and displayed in the digitale closet
 @Model
 class Piece: ObservableObject {
+    /// The name of the piece
     var name: String
+    /// The fit of the piece (How it fits)
     var fit: String
+    /// The Type of clothing the piece is
     var type: String
+    /// The material the piece is made of
     var material: String
+    /// The Size of the piece
     var size: String
+    /// The image data of the piece
     var image: Data?
+    /// The Value of red of the pieces color (Swift Color)
     var colorR: Double
+    /// The Value of Green in the pieces color (Swift Color)
     var colorG: Double
+    /// The Value of the blue in the pieces color (Swift Color)
     var colorB: Double
+    /// The Brand the piece came from
     var brand: String
+    /// The owner of the piece
     var owner: String
+    /// The season the piece should be warn
     var season: String
+    /// The Unique ID accociated with the Piece
     var uniqueID: String
     
     init(name: String, fit: String, type: String, marterial: String, size: String, image: Data? = nil, colorR: Double, colorG: Double, colorB: Double, brand: String, owner: String, season: String, uniqueID: String) {
@@ -50,7 +64,6 @@ class Piece: ObservableObject {
         self.type = "Type"
         self.material = "Material"
         self.size = "Size"
-        self.image = UIImage(systemName: "person.fill")!.pngData()
         self.colorR = 255
         self.colorG = 255
         self.colorB = 255
@@ -61,13 +74,14 @@ class Piece: ObservableObject {
     }
     
     
-
+    /// Funcition ot get the entire swift color
     func getSwiftColor() -> Color {
         var foundColor: Color
         foundColor = Color(red: colorR, green: colorG, blue: colorB)
         return foundColor
     }
     
+    /// Function to get the CGColor Value
     func getCGColor() -> CGColor {
         let red   = CGFloat(colorR) / 255.0
         let green = CGFloat(colorG) / 255.0
@@ -76,6 +90,7 @@ class Piece: ObservableObject {
         return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
     
+    /// Function to get the season string
     func getSeasonString() -> String {
         var seasonString: String
         switch season {
@@ -94,6 +109,7 @@ class Piece: ObservableObject {
         return seasonString
     }
     
+    /// Function to generate a unique ID from piece data
     func generateUniqueID(for piece: Piece) -> String {
         let red = Int(piece.colorR)
         let green = Int(piece.colorG)

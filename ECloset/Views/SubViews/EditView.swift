@@ -1,3 +1,9 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by Charlotte Pawloski on 3/21/25.
+
 import SwiftUI
 import PhotosUI
 import SwiftData
@@ -35,32 +41,59 @@ struct EditView: View {
     @State private var nameAlertShowing: Bool = false
     /// Boolean used to present the ownerAlertPopUp
     @State private var ownerAlertShowing: Bool = false
+    /// Boolean uesed to present the cameraView
+    @State private var isCameraPresented = false
+
     
     var body: some View {
         NavigationStack {
             VStack {
                 GeometryReader { geometry in
                     VStack {
-                        PhotosPicker(
-                            selection: $pickerItem,
-                            matching: .images,
-                            photoLibrary: .shared()
-                        ) {
-                            Group {
-                                if let img = displayedImage {
-                                    img
-                                        .resizable()
-                                        .scaledToFit()
-                                } else {
-                                    Image(systemName: "person.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundStyle(.secondary)
+                        ZStack {
+                            PhotosPicker(
+                                selection: $pickerItem,
+                                matching: .images,
+                                photoLibrary: .shared()
+                            ) {
+                                Group {
+                                    if let imageData = piece.image,
+                                       let uiImage = UIImage(data: imageData) {
+                                            Image(uiImage: uiImage)
+                                                .resizable()
+                                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                                .scaledToFit()
+                                                
+                                    } else {
+                                        Image(systemName: "tshirt")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                
+                                .frame(maxWidth: .infinity)
+                                .frame(height: geometry.size.width)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                
+                            }
+                            HStack {
+                                Spacer()
+                                VStack {
+                                    Spacer()
+                                    Button(action: {
+                                        isCameraPresented = true
+                                    }) {
+                                        Image(systemName: "camera")
+                                            .padding(12)
+                                            .background(Color.white.opacity(0.8))
+                                            .clipShape(Circle())
+                                            .shadow(radius: 4)
+                                    }
+                                    .padding(.trailing, 16)
+                                    .padding(.bottom, 16)
                                 }
                             }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: geometry.size.width)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         .onChange(of: pickerItem) { oldItem, newItem in
                             guard let item = newItem else { return }
@@ -180,31 +213,29 @@ struct EditView: View {
                 .interactiveDismissDisabled(false)
                 .presentationDetents([.fraction(0.57), .height(640)])
             }
+            .sheet(isPresented: $isCameraPresented) {
+                CameraView { data in
+                    piece.image = data
+                               }
+            }
             .alert("Type Must Have Value", isPresented: $alertShowing) {}
             .textFieldAlert(isPresented: $nameAlertShowing,
-                           title: "Name",
-                           message: "The Name of the Piece",
-                           placeholder: "Name") { input in
+                            title: "Name",
+                            message: "The Name of the Piece",
+                            placeholder: "Name") { input in
                 if let input = input {
                     piece.name = input
                 }
             }
-            .textFieldAlert(isPresented: $ownerAlertShowing,
-                           title: "Owner",
-                           message: "The Owner of this Piece",
-                           placeholder: "Owner") { input in
-                if let input = input {
-                    piece.owner = input
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        try? modelContext.save()
-                        dismiss()
-                    }
-                }
-            }
+                            .textFieldAlert(isPresented: $ownerAlertShowing,
+                                            title: "Owner",
+                                            message: "The Owner of this Piece",
+                                            placeholder: "Owner") { input in
+                                if let input = input {
+                                    piece.owner = input
+                                }
+                            }
+                                            
         }
     }
     
@@ -216,5 +247,11 @@ struct EditView: View {
         self.changingTitle = changingTitle
         self.changingDictionary = changingDictionary
         popupData = EditPopupData(title: changingTitle, dictionary: changingDictionary)
+    }
+    
+    /// Helper function for making the image variables play nicely allowing for greater ease
+    /// - Parameter uiImage: The UIImage Value of the image
+    func pictureHelper(uiImage: UIImage) {
+        displayedImage = Image(uiImage: uiImage)
     }
 }

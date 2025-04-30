@@ -1,6 +1,13 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by Charlotte Pawloski on 3/21/25.
+
 import SwiftUI
 import SwiftData
 
+/// The Primary view for seeing the users profile and stats of the closet
 struct ProfileView: View {
     @Query private var pieces: [Piece]
     

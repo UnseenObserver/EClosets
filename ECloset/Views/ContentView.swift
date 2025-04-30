@@ -1,3 +1,9 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by Charlotte Pawloski on 3/21/25.
+
 import SwiftUI
 import UIKit
 import _PhotosUI_SwiftUI

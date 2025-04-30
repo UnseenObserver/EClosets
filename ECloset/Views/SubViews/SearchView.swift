@@ -1,3 +1,9 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by HPro2 on 3/21/25.
+
 import SwiftUI
 import SwiftData
 
@@ -20,8 +26,8 @@ struct SearchView: View {
         return pieces.filter { piece in
             let matchesSearch = searchText.isEmpty ||
             piece.name.localizedCaseInsensitiveContains(searchText) ||
-                piece.brand.localizedCaseInsensitiveContains(searchText) ||
-                piece.type.localizedCaseInsensitiveContains(searchText)
+            piece.brand.localizedCaseInsensitiveContains(searchText) ||
+            piece.type.localizedCaseInsensitiveContains(searchText)
             
             let matchesFilters = selectedFilters.isEmpty || selectedFilters.allSatisfy { key, value in
                 switch key {
@@ -44,17 +50,18 @@ struct SearchView: View {
                 List {
                     if filteredPieces.isEmpty {
                         ContentUnavailableView("No matching items",
-                                              systemImage: "magnifyingglass",
-                                              description: Text("Try adjusting your search or filters"))
+                                               systemImage: "magnifyingglass",
+                                               description: Text("Try adjusting your search or filters"))
                     } else {
                         ForEach(filteredPieces) { piece in
                             ClosetCell(color: piece.getSwiftColor(), piece: piece)
                         }
                     }
                 }
+                .searchable(text: $searchText, prompt: "Search your closet")
+                
             }
-            .searchable(text: $searchText, prompt: "Search your closet")
-            .navigationTitle("Search")
+            
         }
     }
 }

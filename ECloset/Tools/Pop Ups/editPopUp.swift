@@ -2,64 +2,71 @@
 //  editPopUp.swift
 //  ECloset
 //
-//  Created by HPro2 on 4/21/25.
+//  Created by Charlotte Pawloski on 4/21/25.
 //
 
 import SwiftUICore
 import SwiftUI
 
+
+/// Reusable pop up for displaying the dictionaries of the value being edited of the item
 struct EditPopUp: View {
+    /// The piece which is being edited
     @ObservedObject var piece: Piece
+    /// The title of the thing being changed. Used for data processing and for UI so must be correct to Dictionary
     let changingTitle: String
+    /// The dictionary equivelent with the thing that must be changed
     var dictionary: [String:String]
 
+    /// The text that has been inputed by the user in the search bar
     @State private var searchText: String = ""
+    /// Global dismiss variable for when the view is dismissed
     @Environment(\.dismiss) private var dismiss
 
-    // 1. Compute a filtered list of keys
+    /// Values out of the given dictionay filtered buy the inputed search text
     private var filteredKeys: [String] {
-        if changingTitle != "Sizes" {
             dictionary.keys
                 .filter { key in
-                    // If searchText is empty, include everything.
-                    // Otherwise only keys containing the text (case‐insensitive).
                     searchText.isEmpty
                     ? true
                     : key.localizedCaseInsensitiveContains(searchText)
                 }
                 .sorted()
-        } else {
-            dictionary.values
-                .filter { values in
-                    // If searchText is empty, include everything.
-                    // Otherwise only keys containing the text (case‐insensitive).
-                    searchText.isEmpty
-                    ? true
-                    : values.localizedCaseInsensitiveContains(searchText)
-                }
-                .sorted()
-        }
     }
 
     var body: some View {
         NavigationStack {
-            if filteredKeys.isEmpty {
-                List {
-                    // 2. Show "no results" when appropriate
-                    if filteredKeys.isEmpty {
-                        Text("No \(changingTitle) found")
-                            .foregroundColor(.secondary)
-                    } else {
-                        Text("Unkown")
+            List {
+                if filteredKeys.isEmpty {
+                    Text("No \(changingTitle) found")
+                        .foregroundColor(.secondary)
+                } else {
+                    if changingTitle != "Sizes" {
+                        Text("Unknown")
                             .onTapGesture {
                                 applyChange(for: "Unkown")
                                 dismiss()
                             }
-                        Section(changingTitle) {
+                        Section("\(changingTitle)") {
                             ForEach(filteredKeys, id: \.self) { key in
-                                if key == "Unknown" {
-                                    
-                                } else {
+                                if key != "Unkown" {
+                                    Text(key)
+                                        .onTapGesture {
+                                            applyChange(for: key)
+                                            dismiss()
+                                        }
+                                }
+                            }
+                        }
+                    } else {
+                        Text("Unknown")
+                            .onTapGesture {
+                                applyChange(for: "Unkown")
+                                dismiss()
+                            }
+                        Section("\(changingTitle)") {
+                            ForEach(sizeDictionaryForEdit(), id: \.self) { key in
+                                if key != "Unkown" {
                                     Text(key)
                                         .onTapGesture {
                                             applyChange(for: key)
@@ -70,17 +77,17 @@ struct EditPopUp: View {
                         }
                     }
                 }
-                .searchable(
-                    text: $searchText,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: "Search \(changingTitle)…"
-                )
-                .navigationTitle(changingTitle)
             }
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search \(changingTitle)…"
+            )
+            .navigationTitle(changingTitle)
         }
     }
 
-    // Your existing mutation logic, renamed for clarity
+    ///Applys the changes of the users interaction with the view to the data of the piece
     private func applyChange(for key: String) {
         switch changingTitle {
         case "Types":
@@ -121,11 +128,19 @@ struct EditPopUp: View {
             break
         }
     }
-    
-    
+
+    //Todo- Make this progromatically change with the dictioanry\
+    /// Get the correctly sorted dictionary for display for the size dictionary
+    func sizeDictionaryForEdit() -> [String] {
+        var tempArray: [String] = [""]
+        
+        tempArray = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL"]
+        
+        return tempArray
+    }
 }
 
-
+///Data variable for easier transfer and packageing of varables
 struct EditPopupData: Identifiable {
     let id = UUID()
     let title: String

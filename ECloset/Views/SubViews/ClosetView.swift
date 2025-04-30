@@ -1,3 +1,9 @@
+//
+//  ClosetCell.swift
+//  EClosets
+//
+//  Created by Charlotte Pawloski on 3/21/25.
+
 import SwiftData
 import SwiftUICore
 import SwiftUI
@@ -10,7 +16,7 @@ struct ClosetView: View {
     /// Boolean to present the add view
     @State private var isPresentedAddView: Bool = false
     /// The selected piece; used for sending the correct piece to the appropiate views
-    @State private var selectedPiece: Piece = Piece()
+    @State private var selectedPiece: Piece?
     /// Boolean for presenting the verification of a delete request
     @State private var showDeleteAlert: Bool = false
     /// Seperate piece variable used specifically for processing a delete request
@@ -97,7 +103,7 @@ struct ClosetView: View {
             
             if pieces.isEmpty {
                 ContentUnavailableView("Your Closet is Empty",
-                                      systemImage: "tshirt",
+                                      systemImage: "",
                                       description: Text("Tap the + button to add clothing items"))
             } else {
                 HStack {
@@ -116,7 +122,6 @@ struct ClosetView: View {
                             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button() {
                                     selectedPiece = piece
-                                    isPresentedEditView = true
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }
@@ -137,6 +142,7 @@ struct ClosetView: View {
                                     Label("Favorite", systemImage: "star")
                                 }
                                 .tint(.indigo)
+                                .disabled(true)
                             }
                     }
                 }
@@ -153,8 +159,8 @@ struct ClosetView: View {
                 }
             }
         }
-        .sheet(isPresented: $isPresentedEditView) {
-            EditView(piece: selectedPiece)
+        .sheet(item: $selectedPiece) { piece in
+            EditView(piece: piece)
                 .presentationDetents([.large])
             
         }
@@ -195,6 +201,7 @@ struct ClosetView: View {
             )
         }
     }
+
     
     /// Helper function to update sort order when switching sort options
     private func updateSortOrder() {
