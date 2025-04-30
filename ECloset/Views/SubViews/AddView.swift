@@ -129,7 +129,11 @@ struct AddView: View {
                                     InfoCell(displayedInfo: newPiece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             if newPiece.type != "Type" {
-                                                tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: newPiece, flipped: false))
+                                                if newPiece.type != "Unknown" {
+                                                    tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: newPiece, flipped: false))
+                                                } else {
+                                                    alertShowing = true
+                                                }
                                             } else {
                                                 alertShowing = true
                                             }

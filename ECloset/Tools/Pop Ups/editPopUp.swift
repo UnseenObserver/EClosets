@@ -12,7 +12,7 @@ import SwiftUI
 /// Reusable pop up for displaying the dictionaries of the value being edited of the item
 struct EditPopUp: View {
     /// The piece which is being edited
-    @ObservedObject var piece: Piece
+    @State var piece: Piece
     /// The title of the thing being changed. Used for data processing and for UI so must be correct to Dictionary
     let changingTitle: String
     /// The dictionary equivelent with the thing that must be changed
@@ -44,12 +44,12 @@ struct EditPopUp: View {
                     if changingTitle != "Sizes" {
                         Text("Unknown")
                             .onTapGesture {
-                                applyChange(for: "Unkown")
+                                applyChange(for: "Unknown")
                                 dismiss()
                             }
                         Section("\(changingTitle)") {
                             ForEach(filteredKeys, id: \.self) { key in
-                                if key != "Unkown" {
+                                if key != "Unknown" {
                                     Text(key)
                                         .onTapGesture {
                                             applyChange(for: key)
@@ -61,12 +61,12 @@ struct EditPopUp: View {
                     } else {
                         Text("Unknown")
                             .onTapGesture {
-                                applyChange(for: "Unkown")
+                                applyChange(for: "Unknown")
                                 dismiss()
                             }
                         Section("\(changingTitle)") {
                             ForEach(sizeDictionaryForEdit(), id: \.self) { key in
-                                if key != "Unkown" {
+                                if key != "Unknown" {
                                     Text(key)
                                         .onTapGesture {
                                             applyChange(for: key)

@@ -193,15 +193,15 @@ class Dictionaries {
     
     /// Dictionary containing all pickable types of clothing
     static let typesEncode: [String: String] = [
-        "Shirts": "SH",
+        "Shirt": "SH",
         "Pants": "PT",
-        "Dresses": "DR",
-        "Skirts": "SK",
-        "Coats": "CT",
+        "Dress": "DR",
+        "Skirt": "SK",
+        "Coat": "CT",
         "Shorts": "ST",
         "Uunderwear": "UW",
         "Socks": "SC",
-        "Bras": "BR",
+        "Bra": "BR",
         "Unkown": "UKN"
     ]
     
@@ -401,23 +401,23 @@ class Dictionaries {
         var placeHolderDictionary: [String:String] = [:]
         
         switch piece.type {
-        case "SHIRTS":
+        case "Shirt":
             placeHolderDictionary = Dictionaries.shirtFitsEncode
-        case "PANTS":
+        case "Pants":
             placeHolderDictionary = Dictionaries.pantsFitsEncode
-        case "DRESS":
+        case "Dress":
             placeHolderDictionary = Dictionaries.dressFitsEncode
-        case "SKIRTS":
+        case "Skirt":
             placeHolderDictionary = Dictionaries.skirtFitsEncode
-        case "COAT":
+        case "Coat":
             placeHolderDictionary = Dictionaries.coatFitsEncode
-        case "SHORTS":
+        case "Shorts":
             placeHolderDictionary = Dictionaries.shortsFitsEncode
-        case "UNDERWEAR":
+        case "Underwear":
             placeHolderDictionary = Dictionaries.underwearFitsEncode
-        case "SOCKS":
+        case "Socks":
             placeHolderDictionary = Dictionaries.sockFitsEncode
-        case "BRA":
+        case "Bra":
             placeHolderDictionary = Dictionaries.braFitsEncode
         default:
             break

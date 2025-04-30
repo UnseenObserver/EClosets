@@ -15,7 +15,7 @@ struct EditView: View {
     /// Enviromental trait for automatic saving for the dismissing of the popover
     @Environment(\.dismiss) private var dismiss
     /// The recieved Piece from the init
-    @Bindable var piece: Piece
+    @State var piece: Piece
     
     /// The adapting item that has been picked inside the photopicker
     @State private var pickerItem: PhotosPickerItem?
@@ -127,8 +127,12 @@ struct EditView: View {
                                         }
                                     InfoCell(displayedInfo: piece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
-                                            if !piece.type.isEmpty {
-                                                tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: piece, flipped: false))
+                                            if piece.type != "Type" {
+                                                if piece.type != "Unknown" {
+                                                    tapHandler(changingTitle: "Fits", changingDictionary: Dictionaries().getFitDictionary(piece: piece, flipped: false))
+                                                } else {
+                                                    alertShowing = true
+                                                }
                                             } else {
                                                 alertShowing = true
                                             }
