@@ -13,6 +13,8 @@ import SwiftUI
 struct EditPopUp: View {
     /// The piece which is being edited
     @State var piece: Piece
+    /// The context of the storage model
+    @Environment(\.modelContext) private var modelContext
     /// The title of the thing being changed. Used for data processing and for UI so must be correct to Dictionary
     let changingTitle: String
     /// The dictionary equivelent with the thing that must be changed
@@ -53,6 +55,7 @@ struct EditPopUp: View {
                                     Text(key)
                                         .onTapGesture {
                                             applyChange(for: key)
+                                            try? modelContext.save()
                                             dismiss()
                                         }
                                 }
@@ -92,6 +95,7 @@ struct EditPopUp: View {
         switch changingTitle {
         case "Types":
             piece.type = key
+            try? modelContext.save()
 
         case "Fits":
             let forward = Dictionaries().getFitDictionary(piece: piece, flipped: false)
@@ -122,11 +126,14 @@ struct EditPopUp: View {
             if let code = Dictionaries.seasonEncode[key],
                let decoded = Dictionaries.seasonDecode[code] {
                 piece.season = decoded
+                try? modelContext.save()
             }
 
         default:
             break
         }
+        
+        
     }
 
     //Todo- Make this progromatically change with the dictioanry\

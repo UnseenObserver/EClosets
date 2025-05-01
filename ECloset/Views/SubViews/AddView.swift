@@ -122,11 +122,11 @@ struct AddView: View {
                             VStack {
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: newPiece.type, width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Types", width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Types", changingDictionary: Dictionaries.typesEncode)
                                         }
-                                    InfoCell(displayedInfo: newPiece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Fits", width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             if newPiece.type != "Type" {
                                                 if newPiece.type != "Unknown" {
@@ -142,15 +142,15 @@ struct AddView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: newPiece.material, width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Materials", width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Materials", changingDictionary: Dictionaries.materialEncode)
                                         }
-                                    InfoCell(displayedInfo: newPiece.season, width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Seasons", width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Seasons", changingDictionary: Dictionaries.seasonEncode)
                                         }
-                                    InfoCell(displayedInfo: newPiece.size, width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Sizes", width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Sizes", changingDictionary: Dictionaries.sizesEncode)
                                         }
@@ -158,7 +158,7 @@ struct AddView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: newPiece.brand, width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Brands", width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
                                         }
@@ -171,7 +171,7 @@ struct AddView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: newPiece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: newPiece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             ownerAlertShowing = true
                                         }
@@ -179,7 +179,7 @@ struct AddView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(displayedInfo: newPiece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
+                                    InfoCell(piece: newPiece, displayedInfo: newPiece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
                                     Spacer(minLength: 0)
                                 }
                             }

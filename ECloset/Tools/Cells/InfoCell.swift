@@ -10,6 +10,7 @@ import SwiftUI
 
 /// Reuseable view meet to be an extremely
 struct InfoCell: View {
+    @State var piece: Piece
     /// The string that should be displayed
     @State var displayedInfo: String
     /// The width of the cell
@@ -33,7 +34,7 @@ struct InfoCell: View {
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius) )
                     .overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(Color.primary.opacity(0.1), lineWidth: 1))
                 
-                Text(displayedInfo)
+                Text(stringFinder(changingTitle: displayedInfo))
                     .font(.title3)
                     .zIndex(1)
                     .foregroundStyle(.primary)
@@ -49,5 +50,27 @@ struct InfoCell: View {
     
     }
     
-    
+    ///Applys the changes of the users interaction with the view to the data of the piece
+    private func stringFinder(changingTitle: String) -> String{
+        var placeHolderString: String = ""
+        
+        switch changingTitle {
+        case "Types":
+            placeHolderString = piece.type
+        case "Fits":
+                placeHolderString = piece.fit
+        case "Sizes":
+                placeHolderString = piece.size
+        case "Materials":
+                placeHolderString = piece.material
+        case "Brands":
+                placeHolderString = piece.brand
+        case "Seasons":
+                placeHolderString = piece.season
+        default:
+            break
+        }
+        
+        return placeHolderString
+    }
 }

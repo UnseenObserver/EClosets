@@ -43,6 +43,7 @@ struct EditView: View {
     @State private var ownerAlertShowing: Bool = false
     /// Boolean uesed to present the cameraView
     @State private var isCameraPresented = false
+    
 
     
     var body: some View {
@@ -121,11 +122,11 @@ struct EditView: View {
                             VStack(spacing: 16) {
                                 HStack {
                                     Spacer()
-                                    InfoCell(displayedInfo: piece.type, width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Types", width: 160, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Types", changingDictionary: Dictionaries.typesEncode)
                                         }
-                                    InfoCell(displayedInfo: piece.fit, width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Fits", width: 210, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             if piece.type != "Type" {
                                                 if piece.type != "Unknown" {
@@ -142,15 +143,15 @@ struct EditView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    InfoCell(displayedInfo: piece.material, width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Materials", width: 140, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Materials", changingDictionary: Dictionaries.materialEncode)
                                         }
-                                    InfoCell(displayedInfo: piece.season, width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Seasons", width: 130, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Seasons", changingDictionary: Dictionaries.seasonEncode)
                                         }
-                                    InfoCell(displayedInfo: piece.size, width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Sizes", width: 90, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Sizes", changingDictionary: Dictionaries.sizesEncode)
                                         }
@@ -159,7 +160,7 @@ struct EditView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    InfoCell(displayedInfo: piece.brand, width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Brands", width: 200, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             tapHandler(changingTitle: "Brands", changingDictionary: Dictionaries.clothingBrandsEncode)
                                         }
@@ -172,7 +173,7 @@ struct EditView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    InfoCell(displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             ownerAlertShowing = true
                                         }
@@ -181,7 +182,7 @@ struct EditView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    InfoCell(displayedInfo: piece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
+                                    InfoCell(piece: piece, displayedInfo: piece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
                                     Spacer()
                                 }
                             }
