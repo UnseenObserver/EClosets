@@ -171,15 +171,10 @@ struct AddView: View {
                                 }
                                 HStack {
                                     Spacer(minLength: 0)
-                                    InfoCell(piece: newPiece, displayedInfo: newPiece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: newPiece, displayedInfo: "Owner", width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             ownerAlertShowing = true
                                         }
-                                    Spacer(minLength: 0)
-                                }
-                                HStack {
-                                    Spacer(minLength: 0)
-                                    InfoCell(piece: newPiece, displayedInfo: newPiece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
                                     Spacer(minLength: 0)
                                 }
                             }

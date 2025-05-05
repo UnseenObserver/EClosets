@@ -67,6 +67,9 @@ struct InfoCell: View {
                 placeHolderString = piece.brand
         case "Seasons":
                 placeHolderString = piece.season
+            
+        case "Owner":
+            placeHolderString = piece.owner
         default:
             break
         }

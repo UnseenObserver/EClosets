@@ -173,16 +173,10 @@ struct EditView: View {
                                 
                                 HStack {
                                     Spacer()
-                                    InfoCell(piece: piece, displayedInfo: piece.owner, width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
+                                    InfoCell(piece: piece, displayedInfo: "Owner", width: 375, height: 50, cornerRadius: 15, scaleFactorX: scaleFactorX, scaleFactorY: scaleFactorY)
                                         .onTapGesture {
                                             ownerAlertShowing = true
                                         }
-                                    Spacer()
-                                }
-                                
-                                HStack {
-                                    Spacer()
-                                    InfoCell(piece: piece, displayedInfo: piece.uniqueID, width: 375, height: 100, cornerRadius: 15, scaleFactorX: 0.9, scaleFactorY: 0.9)
                                     Spacer()
                                 }
                             }
